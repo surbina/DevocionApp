@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import CalendarView from './features/calendar-view/containers/CalendarView.js';
-import DevotionalView from './features/devotional-view/containers/DevotionalView.js';
+import { DevotionalViewContainer } from './features/devotional-view/containers/DevotionalView.js';
 
 class Navigation extends Component {
   _renderScene(route, navigator) {
@@ -16,9 +16,9 @@ class Navigation extends Component {
       case 0:
         return <CalendarView navigator={navigator} />;
       case 1:
-        return <DevotionalView navigator={navigator} />;
+        return <DevotionalViewContainer navigator={navigator} />;
       default:
-        return <DevotionalView navigator={navigator} />;
+        return <DevotionalViewContainer navigator={navigator} />;
     }
   }
 
