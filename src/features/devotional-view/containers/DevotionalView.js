@@ -7,11 +7,15 @@ import { connect } from 'react-redux';
 
 import Drawer from '../../../components/drawer/Drawer.js'
 
-import { initAction } from '../../../reducers/app/actions.js'
+import {
+  initAction,
+  fetchFirebaseAction
+} from '../../../reducers/app/actions.js'
 
 class DevotionalView extends Component {
   componentWillMount() {
     this.props.dispatch(initAction());
+    this.props.dispatch(fetchFirebaseAction());
   }
 
   render() {
@@ -21,6 +25,11 @@ class DevotionalView extends Component {
           <Text>
             DevotionalView!5 {this.props.currentStatus}
           </Text>
+          {!!this.props.devotional ?
+            <Text>
+              Firebase test:{this.props.devotional.get('title')}
+            </Text> :
+            false}
         </View>
       </Drawer>
     );
@@ -29,7 +38,8 @@ class DevotionalView extends Component {
 
 function mapStateToProps(state) {
   return {
-    currentStatus: state.app.get('status')
+    currentStatus: state.app.get('status'),
+    devotional: state.app.get('devotional')
   };
 }
 
