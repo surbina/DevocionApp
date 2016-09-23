@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import Drawer from '../../../components/drawer/Drawer.js';
 import DevotionalContent from '../components/DevotionalContent.js';
@@ -15,7 +16,7 @@ import {
 
 class DevotionalView extends Component {
   componentWillMount() {
-    this.props.dispatch(loadCurrentOrPreviousDevotionalAction('2016-09-23'));
+    this.props.dispatch(loadCurrentOrPreviousDevotionalAction(moment().format('YYYY-MM-DD')));
   }
 
   render() {
