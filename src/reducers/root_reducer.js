@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 
-import app from './app/reducer.js';
+import devotional_list from './devotional_list/reducer.js';
+import devotional_view_section from './devotional_view_section/reducer.js';
 
 export default combineReducers({
-  app: app
+  devotional_list,
+  devotional_view_section
 });

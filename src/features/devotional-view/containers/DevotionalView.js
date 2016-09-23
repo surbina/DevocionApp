@@ -1,45 +1,37 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  View
-} from 'react-native';
 import { connect } from 'react-redux';
 
-import Drawer from '../../../components/drawer/Drawer.js'
+import Drawer from '../../../components/drawer/Drawer.js';
+import DevotionalContent from '../components/DevotionalContent.js';
 
 import {
-  initAction,
-  fetchFirebaseAction
-} from '../../../reducers/app/actions.js'
+  loadCurrentOrPreviousDevotionalAction,
+  loadCurrentOrNextDevotionalAction
+} from '../../../reducers/devotional_view_section/actions.js';
+
+import {
+  LOADING_DEVOTIONAL_STATUS
+} from '../../../reducers/devotional_view_section/reducer.js';
 
 class DevotionalView extends Component {
   componentWillMount() {
-    this.props.dispatch(initAction());
-    this.props.dispatch(fetchFirebaseAction());
+    this.props.dispatch(loadCurrentOrPreviousDevotionalAction('2016-09-23'));
   }
 
   render() {
     return (
       <Drawer navigator={this.props.navigator}>
-        <View>
-          <Text>
-            DevotionalView!5 {this.props.currentStatus}
-          </Text>
-          {!!this.props.devotional ?
-            <Text>
-              Firebase test:{this.props.devotional.get('title')}
-            </Text> :
-            false}
-        </View>
+        <DevotionalContent  devotional={this.props.devotional} />
       </Drawer>
     );
   }
 }
 
 function mapStateToProps(state) {
+  const currentDevotionalPublishDate = state.devotional_view_section.get('current_devotional_publish_date');
   return {
-    currentStatus: state.app.get('status'),
-    devotional: state.app.get('devotional')
+    devotional: state.devotional_list.get(currentDevotionalPublishDate),
+    loadingDevotional: state.devotional_view_section.get('status') === LOADING_DEVOTIONAL_STATUS
   };
 }
 
