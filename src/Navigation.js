@@ -10,27 +10,29 @@ import {
 import CalendarView from './features/calendar-view/containers/CalendarView.js';
 import { DevotionalViewContainer } from './features/devotional-view/containers/DevotionalView.js';
 
+export const DEVOTIONAL_VIEW_ROUTE_INDEX = 'DEVOTIONAL_VIEW';
+export const CALENDAR_VIEW_ROUTE_INDEX = 'CALENDAR_VIEW';
+
 class Navigation extends Component {
   _renderScene(route, navigator) {
     switch(route.index) {
-      case 0:
+      case CALENDAR_VIEW_ROUTE_INDEX:
         return <CalendarView navigator={navigator} />;
-      case 1:
-        return <DevotionalViewContainer navigator={navigator} />;
+      case DEVOTIONAL_VIEW_ROUTE_INDEX:
       default:
-        return <DevotionalViewContainer navigator={navigator} />;
+        return <DevotionalViewContainer navigator={navigator}  params={route.params} />;
     }
   }
 
   render() {
-    const routes = [
-      {title: 'Calendar View', index: 0},
-      {title: 'Devotional View', index: 1},
-    ];
+    const initialRoute = {
+      index: DEVOTIONAL_VIEW_ROUTE_INDEX,
+      params: {}
+    };
 
     return (
       <Navigator
-        initialRoute={routes[1]}
+        initialRoute={initialRoute}
         renderScene={this._renderScene}
       />
     );

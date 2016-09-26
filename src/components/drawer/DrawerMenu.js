@@ -7,6 +7,11 @@ import {
   TouchableHighlight
 } from 'react-native';
 
+import {
+  DEVOTIONAL_VIEW_ROUTE_INDEX,
+  CALENDAR_VIEW_ROUTE_INDEX
+} from '../../Navigation.js';
+
 class DrawerMenu extends Component {
   constructor(props) {
     super(props);
@@ -17,8 +22,8 @@ class DrawerMenu extends Component {
 
     this.state = {
       dataSource: ds.cloneWithRows([
-        {title: 'Calendar View', index: 0},
-        {title: 'Devotional View', index: 1},
+        {title: 'Devotional View', index: DEVOTIONAL_VIEW_ROUTE_INDEX, params: {}},
+        {title: 'Calendar View', index: CALENDAR_VIEW_ROUTE_INDEX},
       ])
     };
 
