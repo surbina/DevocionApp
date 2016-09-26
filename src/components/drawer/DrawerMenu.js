@@ -9,7 +9,8 @@ import {
 
 import {
   DEVOTIONAL_VIEW_ROUTE_INDEX,
-  CALENDAR_VIEW_ROUTE_INDEX
+  CALENDAR_VIEW_ROUTE_INDEX,
+  SIGN_IN_ROUTE_INDEX
 } from '../../Navigation.js';
 
 class DrawerMenu extends Component {
@@ -24,6 +25,7 @@ class DrawerMenu extends Component {
       dataSource: ds.cloneWithRows([
         {title: 'Devotional View', index: DEVOTIONAL_VIEW_ROUTE_INDEX, params: {}},
         {title: 'Calendar View', index: CALENDAR_VIEW_ROUTE_INDEX},
+        {title: 'Sign In', index: SIGN_IN_ROUTE_INDEX},
       ])
     };
 
@@ -33,6 +35,7 @@ class DrawerMenu extends Component {
   _renderMenuItem(item) {
     return(
       <TouchableHighlight
+        style={{height: 50}}
         activeOpacity={0.6}
         underlayColor={'white'}
         onPress={this._onPressButton.bind(this, item)}>
@@ -42,7 +45,6 @@ class DrawerMenu extends Component {
   }
 
   _onPressButton(item) {
-    console.log('Transition to ' + item.title);
     this.props.navigator.replaceAtIndex(item, 0);
   }
 

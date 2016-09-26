@@ -9,15 +9,19 @@ import {
 
 import CalendarView from './features/calendar-view/containers/CalendarView.js';
 import { DevotionalViewContainer } from './features/devotional-view/containers/DevotionalView.js';
+import { SignInContainer } from './features/auth/containers/SignIn.js';
 
 export const DEVOTIONAL_VIEW_ROUTE_INDEX = 'DEVOTIONAL_VIEW';
 export const CALENDAR_VIEW_ROUTE_INDEX = 'CALENDAR_VIEW';
+export const SIGN_IN_ROUTE_INDEX = 'SIGN_IN';
 
 class Navigation extends Component {
   _renderScene(route, navigator) {
     switch(route.index) {
       case CALENDAR_VIEW_ROUTE_INDEX:
         return <CalendarView navigator={navigator} />;
+      case SIGN_IN_ROUTE_INDEX:
+        return <SignInContainer navigator={navigator} params={route.params} />;
       case DEVOTIONAL_VIEW_ROUTE_INDEX:
       default:
         return <DevotionalViewContainer navigator={navigator}  params={route.params} />;
@@ -26,7 +30,7 @@ class Navigation extends Component {
 
   render() {
     const initialRoute = {
-      index: DEVOTIONAL_VIEW_ROUTE_INDEX,
+      index: SIGN_IN_ROUTE_INDEX,
       params: {}
     };
 
