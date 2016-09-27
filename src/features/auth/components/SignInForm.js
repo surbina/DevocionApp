@@ -64,13 +64,6 @@ const styles = StyleSheet.create({
     borderColor: '#d6d7da',
     height: 100,
     backgroundColor: 'red'
-  },
-  buttonNext: {
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    height: 100,
-    backgroundColor: 'blue'
   }
 });
 

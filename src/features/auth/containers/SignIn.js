@@ -11,7 +11,6 @@ import SignInForm from '../components/SignInForm.js';
 import { signInAction } from '../../../reducers/user/actions.js';
 
 class SignIn extends Component {
-
   constructor(props) {
     super(props);
 
@@ -19,7 +18,6 @@ class SignIn extends Component {
   }
 
   _handleSubmitSignIn(user) {
-    console.log('USER: ', user);
     this.props.dispatch(signInAction(user));
   }
 

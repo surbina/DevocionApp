@@ -11,7 +11,8 @@ import {
 import {
   DEVOTIONAL_VIEW_ROUTE_INDEX,
   CALENDAR_VIEW_ROUTE_INDEX,
-  SIGN_IN_ROUTE_INDEX
+  SIGN_IN_ROUTE_INDEX,
+  SIGN_UP_ROUTE_INDEX
 } from '../../Navigation.js';
 
 import { signOutAction } from '../../reducers/user/actions.js';
@@ -29,6 +30,7 @@ class DrawerMenu extends Component {
         {title: 'Devotional View', action: this._navigateToRoute.bind(this, DEVOTIONAL_VIEW_ROUTE_INDEX, {})},
         {title: 'Calendar View', action: this._navigateToRoute.bind(this, CALENDAR_VIEW_ROUTE_INDEX)},
         {title: 'Sign In', action: this._navigateToRoute.bind(this, SIGN_IN_ROUTE_INDEX)},
+        {title: 'Sign Up', action: this._navigateToRoute.bind(this, SIGN_UP_ROUTE_INDEX)},
         {title: 'Sign Out', action: this._dispatchAction.bind(this, signOutAction)},
       ])
     };
