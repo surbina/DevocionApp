@@ -5,7 +5,7 @@ import {
   View
 } from 'react-native';
 
-import DrawerMenu from './DrawerMenu.js'
+import { DrawerMenuContainer } from './DrawerMenu.js'
 
 class Drawer extends Component {
   prueba() {
@@ -13,7 +13,7 @@ class Drawer extends Component {
   }
 
   _renderDrawerMenu() {
-    return <DrawerMenu navigator={this.props.navigator} />;
+    return <DrawerMenuContainer navigator={this.props.navigator} />;
   }
 
   render() {
