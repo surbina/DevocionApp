@@ -18,6 +18,8 @@ class SignInForm extends Component {
       email: '',
       password: ''
     };
+
+    this.handleFormSubmit = this._handleFormSubmit.bind(this);
   }
 
   _handleFormSubmit() {
@@ -48,7 +50,7 @@ class SignInForm extends Component {
           placeholder="Password"
         />
         <TouchableHighlight
-          onPress={this._handleFormSubmit.bind(this)}
+          onPress={this.handleFormSubmit}
           style={styles.buttonPrev} >
             <Text>INGRESAR</Text>
         </TouchableHighlight>

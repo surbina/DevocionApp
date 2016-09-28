@@ -10,13 +10,17 @@ import {
 import CommentForm from '../components/CommentForm.js';
 import CommentList from '../components/CommentList.js';
 
-import { fetchCommentListAction } from '../../../reducers/comment_list/actions.js';
+import {
+  fetchCommentListAction,
+  postCommentAction
+} from '../../../reducers/comment_list/actions.js';
 
 class CommentView extends Component {
   constructor(props) {
     super(props);
 
     this.getComments = this._getComments.bind(this);
+    this.handleCommentSubmit = this._handleCommentSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -27,11 +31,17 @@ class CommentView extends Component {
     return this.props.comments || Map();
   }
 
+  _handleCommentSubmit (comment) {
+    this.props.dispatch(postCommentAction(this.props.devotionalId, comment));    
+  }
+
   render() {
     return (
       <View>
         <Text>CommentView</Text>
-        <CommentForm user={this.props.user} />
+        <CommentForm
+          user={this.props.user}
+          onCommentSubmit={this.handleCommentSubmit} />
         {this.getComments().size > 0 ?
             <CommentList comments={this.getComments()} />:
             <Text>Todavía no han comentado este devocional.</Text>}
