@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import {
   Text
 } from 'react-native';
+import shallowCompare from 'react-addons-shallow-compare';
 
 import Drawer from '../../../components/drawer/Drawer.js';
 import SignInForm from '../components/SignInForm.js';
@@ -15,6 +15,10 @@ class SignIn extends Component {
     super(props);
 
     this.handleSubmitSignIn = this._handleSubmitSignIn.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   }
 
   _handleSubmitSignIn(user) {

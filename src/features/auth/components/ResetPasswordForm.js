@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import {
   View,
   Text,
@@ -7,6 +6,7 @@ import {
   TouchableHighlight,
   StyleSheet
 } from 'react-native';
+import shallowCompare from 'react-addons-shallow-compare';
 
 class ResetPasswordForm extends Component {
   constructor(props) {
@@ -15,6 +15,10 @@ class ResetPasswordForm extends Component {
     this.state ={
       email: ''
     };
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   }
 
   _handleFormSubmit() {

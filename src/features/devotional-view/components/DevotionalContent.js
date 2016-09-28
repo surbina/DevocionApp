@@ -7,6 +7,7 @@ import {
   ScrollView,
   StyleSheet
 } from 'react-native';
+import shallowCompare from 'react-addons-shallow-compare';
 
 class DevotionalContent extends Component {
   constructor(props) {
@@ -15,6 +16,10 @@ class DevotionalContent extends Component {
     this.handlePreviousAction = this._handlePreviousAction.bind(this);
     this.handleNextAction = this._handleNextAction.bind(this);
     this.handleViewCommentsAction = this._handleViewCommentsAction.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   }
 
   _handlePreviousAction() {

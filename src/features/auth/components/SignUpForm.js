@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import {
   View,
   Text,
@@ -7,6 +6,7 @@ import {
   TouchableHighlight,
   StyleSheet
 } from 'react-native';
+import shallowCompare from 'react-addons-shallow-compare';
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -19,6 +19,10 @@ class SignUpForm extends Component {
       password: '',
       confirmPassword: '',
     };
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   }
 
   _handleFormSubmit() {

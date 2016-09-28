@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-
 import {
   Text,
   View,
@@ -8,6 +7,7 @@ import {
   TouchableHighlight,
   StyleSheet
 } from 'react-native';
+import shallowCompare from 'react-addons-shallow-compare';
 
 class CommentForm extends Component {
   constructor(props) {
@@ -18,6 +18,10 @@ class CommentForm extends Component {
     };
 
     this.handleFormSubmit = this._handleFormSubmit.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   }
 
   _handleFormSubmit() {

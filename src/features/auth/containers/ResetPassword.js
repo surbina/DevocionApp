@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import shallowCompare from 'react-addons-shallow-compare';
 
 import Drawer from '../../../components/drawer/Drawer.js';
 import ResetPasswordForm from '../components/ResetPasswordForm.js';
@@ -11,6 +12,10 @@ class ResetPassword extends Component {
   constructor(props) {
     super(props);
     this.handleResetPasswordSubmit = this._handleResetPasswordSubmit.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   }
 
   _handleResetPasswordSubmit(email) {

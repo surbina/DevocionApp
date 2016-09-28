@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import {
   Text,
   View
 } from 'react-native';
+import shallowCompare from 'react-addons-shallow-compare';
 
 import { DEVOTIONAL_VIEW_ROUTE_INDEX } from '../../../Navigation.js';
 import { retrieveCurrentUserAction } from '../../../reducers/user/actions.js';
@@ -13,6 +13,10 @@ class SplashScreenView extends Component {
   constructor(props) {
     super(props);
     this.onLoaded = this._onLoaded.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   }
 
   componentWillMount() {
@@ -27,7 +31,6 @@ class SplashScreenView extends Component {
   }
 
   render() {
-
     return (
       <View>
         <Text>Bienvenido a DevocionApp</Text>

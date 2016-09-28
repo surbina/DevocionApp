@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
-
 import {
   Text,
   View
 } from 'react-native';
+import shallowCompare from 'react-addons-shallow-compare';
 
 import CommentForm from '../components/CommentForm.js';
 import CommentList from '../components/CommentList.js';
@@ -21,6 +21,10 @@ class CommentView extends Component {
 
     this.getComments = this._getComments.bind(this);
     this.handleCommentSubmit = this._handleCommentSubmit.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   }
 
   componentDidMount() {

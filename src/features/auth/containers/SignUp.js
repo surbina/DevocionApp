@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import {
   Text
 } from 'react-native';
+import shallowCompare from 'react-addons-shallow-compare';
 
 import {
   CREATING_USER_STATUS,
@@ -21,6 +21,10 @@ class SignUp extends Component {
     super(props);
 
     this.handleSubmitSignUp = this._handleSubmitSignUp.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   }
 
   _handleSubmitSignUp(user) {

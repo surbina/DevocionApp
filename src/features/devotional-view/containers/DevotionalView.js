@@ -5,6 +5,7 @@ import {
   Text,
   View
 } from 'react-native';
+import shallowCompare from 'react-addons-shallow-compare';
 
 import Drawer from '../../../components/drawer/Drawer.js';
 import DevotionalContent from '../components/DevotionalContent.js';
@@ -27,6 +28,10 @@ class DevotionalView extends Component {
     this.onPreviousDevotional = this._onPreviousDevotional.bind(this);
     this.onNextDevotional = this._onNextDevotional.bind(this);
     this.onViewComments = this._onViewComments.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   }
 
   componentWillMount() {

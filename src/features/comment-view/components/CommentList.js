@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-
 import {
   Text,
   ScrollView
 } from 'react-native';
+import shallowCompare from 'react-addons-shallow-compare';
 
 import CommentItem from './CommentItem.js';
 
 class CommentList extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
+  }
+  
   render() {
     return(
       <ScrollView>
