@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import {
   Text,
   View,
   ListView,
   TouchableHighlight
 } from 'react-native';
+import shallowCompare from 'react-addons-shallow-compare';
 
 import {
   DEVOTIONAL_VIEW_ROUTE_INDEX,
@@ -38,6 +38,10 @@ class DrawerMenu extends Component {
     };
 
     this._renderMenuItem = this._renderMenuItem.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   }
 
   _renderMenuItem(item) {
