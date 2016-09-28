@@ -8,10 +8,6 @@ import {
 import { DrawerMenuContainer } from './DrawerMenu.js'
 
 class Drawer extends Component {
-  prueba() {
-    return 'esto es una prueba';
-  }
-
   _renderDrawerMenu() {
     return <DrawerMenuContainer navigator={this.props.navigator} />;
   }

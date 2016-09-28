@@ -25,18 +25,13 @@ class SignIn extends Component {
     return (
       <Drawer navigator={this.props.navigator}>
         <SignInForm onSignInSubmit={this.handleSubmitSignIn} />
-        <Text>USUARIO STATUS: {this.props.user.get('status')}</Text>
-        <Text>USUARIO LOGUEADO: {this.props.user.get('user_first_name')}</Text>
       </Drawer>
     );
   }
 }
 
 function mapStateToProps(state) {
-  const user = state.user;
-  return {
-    user
-  };
+  return {};
 }
 
 export const SignInContainer = connect(mapStateToProps)(SignIn);

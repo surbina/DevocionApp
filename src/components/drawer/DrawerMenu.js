@@ -63,7 +63,7 @@ class DrawerMenu extends Component {
   render() {
     return (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
-        <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>I'm in the Drawer1!</Text>
+        <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>Nombre: {this.props.user.get('user_first_name') || 'ANONIMO'}</Text>
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this._renderMenuItem}
@@ -74,7 +74,9 @@ class DrawerMenu extends Component {
 }
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    user: state.user
+  };
 }
 
 export const DrawerMenuContainer = connect(mapStateToProps)(DrawerMenu);
