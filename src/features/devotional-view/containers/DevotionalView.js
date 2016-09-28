@@ -18,8 +18,17 @@ import {
   LOADING_DEVOTIONAL_STATUS
 } from '../../../reducers/devotional_view_section/reducer.js';
 
+import { COMMENT_VIEW_ROUTE_INDEX } from '../../../Navigation.js';;
 
 class DevotionalView extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onPreviousDevotional = this._onPreviousDevotional.bind(this);
+    this.onNextDevotional = this._onNextDevotional.bind(this);
+    this.onViewComments = this._onViewComments.bind(this);
+  }
+
   componentWillMount() {
     const devotionalDate = !!this.props.params && this.props.params.devotionalDate ?
       this.props.params.devotionalDate :
@@ -36,6 +45,10 @@ class DevotionalView extends Component {
     this.props.dispatch(loadCurrentOrNextDevotionalAction(devotionalDate));
   }
 
+  _onViewComments() {
+    this.props.navigator.push({index: COMMENT_VIEW_ROUTE_INDEX, params: {}});
+  }
+
   render() {
     return (
       this.props.loadingDevotional ?
@@ -45,8 +58,9 @@ class DevotionalView extends Component {
       <Drawer navigator={this.props.navigator}>
         <DevotionalContent
           devotional={this.props.devotional}
-          onPreviousAction={this._onPreviousDevotional.bind(this)}
-          onNextAction={this._onNextDevotional.bind(this)} />
+          onPreviousAction={this.onPreviousDevotional}
+          onNextAction={this.onNextDevotional}
+          onViewCommentsAction={this.onViewComments} />
       </Drawer>
     );
   }
