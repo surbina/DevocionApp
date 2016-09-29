@@ -1,5 +1,5 @@
-//import { push } from 'react-router-redux';
-//import { toastr } from 'react-redux-toastr';
+import { ToastAndroid } from 'react-native';
+
 import {
   fetchPrevDevotionalAction,
   fetchNextDevotionalAction
@@ -8,17 +8,17 @@ import {
 export const LOAD_DEVOTIONAL_VIEW = 'LOAD_DEVOTIONAL_VIEW';
 export const SET_CURRENT_DEVOTIONAL = 'SET_CURRENT_DEVOTIONAL';
 
-export function loadCurrentOrPreviousDevotionalAction(devotionalPublishDate) {
+export function loadCurrentOrPreviousDevotionalAction(devotionalPublishDate, devotionalNotFoundCallback) {
   return function(dispatch) {
     dispatch(loadDevotionalAction(devotionalPublishDate));
-    dispatch(fetchPrevDevotionalAction(devotionalPublishDate, updateCurrentDevotional, redirectoToDevotionalNotFound));
+    dispatch(fetchPrevDevotionalAction(devotionalPublishDate, updateCurrentDevotional, devotionalNotFoundCallback));
   };
 }
 
-export function loadCurrentOrNextDevotionalAction(devotionalPublishDate) {
+export function loadCurrentOrNextDevotionalAction(devotionalPublishDate, devotionalNotFoundCallback) {
   return function(dispatch) {
     dispatch(loadDevotionalAction(devotionalPublishDate));
-    dispatch(fetchNextDevotionalAction(devotionalPublishDate, updateCurrentDevotional, redirectoToDevotionalNotFound));
+    dispatch(fetchNextDevotionalAction(devotionalPublishDate, updateCurrentDevotional, devotionalNotFoundCallback));
   };
 }
 
@@ -27,16 +27,9 @@ export function updateCurrentDevotional(devotional) {
     const state = getState();
     dispatch(setCurrentDevotionalAction(devotional));
     if(state.devotional_view_section.get('target_date') !== devotional.publish_date) {
-      //dispatch(push('/devotional/' + devotional.publish_date));
-      //toastr.info('Devocional no encontrado', 'No encontramos un devocional para esta fecha, así que navegamos hacia el más próximo');
+      ToastAndroid.show('No encontramos un devocional para esta fecha, así que navegamos hacia el más próximo', ToastAndroid.LONG);
     }
   };
-}
-
-export function redirectoToDevotionalNotFound() {
-  /*return function(dispatch) {
-    dispatch(push('/devotional-not-found'));
-  }*/
 }
 
 export function loadDevotionalAction(devotionalPublishDate) {

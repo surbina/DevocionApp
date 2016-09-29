@@ -21,6 +21,7 @@ class SignUp extends Component {
     super(props);
 
     this.handleSubmitSignUp = this._handleSubmitSignUp.bind(this);
+    this.redirectOnSuccessSignUp = this._redirectOnSuccessSignUp.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -28,7 +29,14 @@ class SignUp extends Component {
   }
 
   _handleSubmitSignUp(user) {
-    this.props.dispatch(createNewUserAction(user));
+    this.props.dispatch(createNewUserAction(user, this.redirectOnSuccessSignUp));
+  }
+
+  _redirectOnSuccessSignUp() {
+    const item = {
+      index: DEVOTIONAL_VIEW_ROUTE_INDEX
+    };
+    this.props.navigator.replaceAtIndex(item, 0);
   }
 
   render() {

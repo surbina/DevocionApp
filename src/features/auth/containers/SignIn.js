@@ -7,14 +7,15 @@ import shallowCompare from 'react-addons-shallow-compare';
 
 import { DrawerContainer } from '../../../components/drawer/Drawer.js';
 import SignInForm from '../components/SignInForm.js';
-
 import { signInAction } from '../../../reducers/user/actions.js';
+import { DEVOTIONAL_VIEW_ROUTE_INDEX } from '../../../Navigation.js';
 
 class SignIn extends Component {
   constructor(props) {
     super(props);
 
     this.handleSubmitSignIn = this._handleSubmitSignIn.bind(this);
+    this.redirectOnSuccessSignIn = this._redirectOnSuccessSignIn.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -22,7 +23,14 @@ class SignIn extends Component {
   }
 
   _handleSubmitSignIn(user) {
-    this.props.dispatch(signInAction(user));
+    this.props.dispatch(signInAction(user, this.redirectOnSuccessSignIn));
+  }
+
+  _redirectOnSuccessSignIn() {
+    const item = {
+      index: DEVOTIONAL_VIEW_ROUTE_INDEX
+    };
+    this.props.navigator.replaceAtIndex(item, 0);
   }
 
   render() {

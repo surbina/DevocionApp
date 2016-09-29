@@ -19,7 +19,10 @@ import {
   LOADING_DEVOTIONAL_STATUS
 } from '../../../reducers/devotional_view_section/reducer.js';
 
-import { COMMENT_VIEW_ROUTE_INDEX } from '../../../Navigation.js';;
+import {
+  COMMENT_VIEW_ROUTE_INDEX,
+  DEVOTIONAL_NOT_FOUND_VIEW_ROUTE_INDEX
+} from '../../../Navigation.js';;
 
 class DevotionalView extends Component {
   constructor(props) {
@@ -28,6 +31,7 @@ class DevotionalView extends Component {
     this.onPreviousDevotional = this._onPreviousDevotional.bind(this);
     this.onNextDevotional = this._onNextDevotional.bind(this);
     this.onViewComments = this._onViewComments.bind(this);
+    this.onDevotionalNotFound = this._onDevotionalNotFound.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -39,19 +43,23 @@ class DevotionalView extends Component {
       this.props.params.devotionalDate :
       moment().format('YYYY-MM-DD');
 
-    this.props.dispatch(loadCurrentOrPreviousDevotionalAction(devotionalDate));
+    this.onPreviousDevotional(devotionalDate);
   }
 
   _onPreviousDevotional(devotionalDate) {
-    this.props.dispatch(loadCurrentOrPreviousDevotionalAction(devotionalDate));
+    this.props.dispatch(loadCurrentOrPreviousDevotionalAction(devotionalDate, this.onDevotionalNotFound));
   }
 
   _onNextDevotional(devotionalDate) {
-    this.props.dispatch(loadCurrentOrNextDevotionalAction(devotionalDate));
+    this.props.dispatch(loadCurrentOrNextDevotionalAction(devotionalDate, this.onDevotionalNotFound));
   }
 
   _onViewComments() {
     this.props.navigator.push({index: COMMENT_VIEW_ROUTE_INDEX, params: {}});
+  }
+
+  _onDevotionalNotFound() {
+    this.props.navigator.replaceAtIndex({index: DEVOTIONAL_NOT_FOUND_VIEW_ROUTE_INDEX}, 0);
   }
 
   render() {

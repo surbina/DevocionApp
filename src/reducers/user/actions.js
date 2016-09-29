@@ -68,7 +68,7 @@ export function retrieveAdditionalUserData(userId) {
   }
 }
 
-export function createNewUserAction(user) {
+export function createNewUserAction(user, successCallback) {
   return function(dispatch) {
     dispatch(submitNewUserAction(user));
 
@@ -81,6 +81,11 @@ export function createNewUserAction(user) {
       user.id = userDB.uid;
       dispatch(setCurrentUserAction(userDB));
       dispatch(updateAdditionalUserDataAction(user));
+
+      if(!!successCallback) {
+        successCallback();
+      }
+
       ToastAndroid.show('Te has registrado correctamente', ToastAndroid.LONG);
     }
 
@@ -122,7 +127,7 @@ export function updateAdditionalUserDataAction(user) {
   };
 }
 
-export function signInAction(user) {
+export function signInAction(user, successCallback) {
   return function(dispatch) {
     dispatch(submitSigInAction());
 
@@ -134,6 +139,11 @@ export function signInAction(user) {
     function success(user) {
       dispatch(setCurrentUserAction(user));
       dispatch(retrieveAdditionalUserData(user.uid));
+
+      if(!!successCallback) {
+        successCallback();
+      }
+
       ToastAndroid.show('Bienvenido nuevamente', ToastAndroid.SHORT);
     }
 

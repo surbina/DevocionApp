@@ -10,7 +10,7 @@ export const REQUEST_NEXT_DEVOTIONAL = 'REQUEST_NEXT_DEVOTIONAL';
 export const REQUEST_NEXT_DEVOTIONAL_SUCCESS = 'REQUEST_NEXT_DEVOTIONAL_SUCCESS';
 export const REQUEST_NEXT_DEVOTIONAL_FAIL = 'REQUEST_NEXT_DEVOTIONAL_FAIL';
 
-export function fetchPrevDevotionalAction(publish_date, successCallbackAction, emptyCallbackAction) {
+export function fetchPrevDevotionalAction(publish_date, successCallbackAction, emptyCallback) {
   return function (dispatch, getState) {
     const state = getState();
     if(shouldFetchDevotional(state, publish_date)) {
@@ -42,8 +42,8 @@ export function fetchPrevDevotionalAction(publish_date, successCallbackAction, e
           message: 'Devotional not found'
         }));
 
-        if(!!emptyCallbackAction) {
-          dispatch(emptyCallbackAction.call());
+        if(!!emptyCallback) {
+          emptyCallback();
         }
       }
     }
@@ -63,7 +63,7 @@ export function fetchPrevDevotionalAction(publish_date, successCallbackAction, e
   };
 }
 
-export function fetchNextDevotionalAction(publish_date, successCallbackAction, emptyCallbackAction) {
+export function fetchNextDevotionalAction(publish_date, successCallbackAction, emptyCallback) {
   return function (dispatch, getState) {
     const state = getState();
     if(shouldFetchDevotional(state, publish_date)) {
@@ -95,8 +95,8 @@ export function fetchNextDevotionalAction(publish_date, successCallbackAction, e
           message: 'Devotional not found'
         }));
 
-        if(!!emptyCallbackAction) {
-          dispatch(emptyCallbackAction.call());
+        if(!!emptyCallback) {
+          emptyCallback();
         }
       }
     }

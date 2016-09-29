@@ -15,6 +15,11 @@ import {
   RESET_PASSWORD_ROUTE_INDEX
 } from '../../Navigation.js';
 
+import {
+  ANONYMOUS_USER_STATUS,
+  SIGNED_USER_STATUS
+} from '../../reducers/user/reducer.js';
+
 import { signOutAction } from '../../reducers/user/actions.js';
 
 class DrawerMenu extends Component {
@@ -26,13 +31,14 @@ class DrawerMenu extends Component {
     });
 
     this.state = {
-      dataSource: ds.cloneWithRows([
+      dataSourceCommonSections: ds.cloneWithRows([
         {title: 'Devotional View', action: this._handleNavigateToRoute.bind(this, DEVOTIONAL_VIEW_ROUTE_INDEX, {})},
-        {title: 'Calendar View', action: this._handleNavigateToRoute.bind(this, CALENDAR_VIEW_ROUTE_INDEX)},
+        {title: 'Calendar View', action: this._handleNavigateToRoute.bind(this, CALENDAR_VIEW_ROUTE_INDEX)}
+      ]),
+      dataSourceAnonymousUser: ds.cloneWithRows([
         {title: 'Sign In', action: this._handleNavigateToRoute.bind(this, SIGN_IN_ROUTE_INDEX)},
         {title: 'Sign Up', action: this._handleNavigateToRoute.bind(this, SIGN_UP_ROUTE_INDEX)},
-        {title: 'Reset Password', action: this._handleNavigateToRoute.bind(this, RESET_PASSWORD_ROUTE_INDEX)},
-        {title: 'Sign Out', action: this._handleDispatchAction.bind(this, signOutAction)},
+        {title: 'Reset Password', action: this._handleNavigateToRoute.bind(this, RESET_PASSWORD_ROUTE_INDEX)}
       ])
     };
 
@@ -68,9 +74,21 @@ class DrawerMenu extends Component {
       <View style={{flex: 1, backgroundColor: '#fff'}}>
         <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>Nombre: {this.props.user.get('user_first_name') || 'ANONIMO'}</Text>
         <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderMenuItem}
-        />
+          dataSource={this.state.dataSourceCommonSections}
+          renderRow={this.renderMenuItem} />
+        {this.props.user.get('status') === ANONYMOUS_USER_STATUS ?
+          <ListView
+            dataSource={this.state.dataSourceAnonymousUser}
+            renderRow={this.renderMenuItem} /> :
+        this.props.user.get('status') === SIGNED_USER_STATUS ?
+          <TouchableHighlight
+            style={{height: 50}}
+            activeOpacity={0.6}
+            underlayColor={'white'}
+            onPress={this._handleDispatchAction.bind(this, signOutAction)}>
+            <Text>Sign out</Text>
+          </TouchableHighlight> :
+          false}
       </View>
     );
   }
