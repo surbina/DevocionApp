@@ -77,7 +77,6 @@ class DevotionalContent extends Component {
         <View>
           <Text>Loading ...</Text>
         </View>
-
     );
   }
 }

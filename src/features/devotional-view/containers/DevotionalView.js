@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import shallowCompare from 'react-addons-shallow-compare';
 
-import Drawer from '../../../components/drawer/Drawer.js';
+import { DrawerContainer } from '../../../components/drawer/Drawer.js';
 import DevotionalContent from '../components/DevotionalContent.js';
 
 import {
@@ -60,13 +60,13 @@ class DevotionalView extends Component {
       <View>
         <Text>Loading ...</Text>
       </View> :
-      <Drawer navigator={this.props.navigator}>
+      <DrawerContainer navigator={this.props.navigator}>
         <DevotionalContent
           devotional={this.props.devotional}
           onPreviousAction={this.onPreviousDevotional}
           onNextAction={this.onNextDevotional}
           onViewCommentsAction={this.onViewComments} />
-      </Drawer>
+      </DrawerContainer>
     );
   }
 }

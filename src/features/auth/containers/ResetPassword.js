@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import shallowCompare from 'react-addons-shallow-compare';
 
-import Drawer from '../../../components/drawer/Drawer.js';
+import { DrawerContainer } from '../../../components/drawer/Drawer.js';
 import ResetPasswordForm from '../components/ResetPasswordForm.js';
 
 import { SENDING_RESET_PASSWORD_MAIL_STATUS } from '../../../reducers/user/reducer.js';
@@ -24,11 +24,11 @@ class ResetPassword extends Component {
 
   render() {
     return (
-      <Drawer navigator={this.props.navigator}>
+      <DrawerContainer navigator={this.props.navigator}>
         <ResetPasswordForm
           onResetPasswordSubmit={this.handleResetPasswordSubmit}
           isSendingResetPasswordMail={this.props.isSendingResetPasswordMail} />
-      </Drawer>
+      </DrawerContainer>
     );
   }
 }

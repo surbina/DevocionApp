@@ -11,7 +11,7 @@ import {
   UPDATING_USER_DATA_STATUS
 } from '../../../reducers/user/reducer.js'
 
-import Drawer from '../../../components/drawer/Drawer.js';
+import { DrawerContainer } from '../../../components/drawer/Drawer.js';
 import SignUpForm from '../components/SignUpForm.js';
 
 import { createNewUserAction } from '../../../reducers/user/actions.js';
@@ -33,9 +33,9 @@ class SignUp extends Component {
 
   render() {
     return (
-      <Drawer navigator={this.props.navigator}>
+      <DrawerContainer navigator={this.props.navigator}>
         <SignUpForm onSignUpSubmit={this.handleSubmitSignUp} />
-      </Drawer>
+      </DrawerContainer>
     );
   }
 }

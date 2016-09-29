@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import shallowCompare from 'react-addons-shallow-compare';
 
-import Drawer from '../../../components/drawer/Drawer.js';
+import { DrawerContainer } from '../../../components/drawer/Drawer.js';
 import SignInForm from '../components/SignInForm.js';
 
 import { signInAction } from '../../../reducers/user/actions.js';
@@ -27,9 +27,9 @@ class SignIn extends Component {
 
   render() {
     return (
-      <Drawer navigator={this.props.navigator}>
+      <DrawerContainer navigator={this.props.navigator}>
         <SignInForm onSignInSubmit={this.handleSubmitSignIn} />
-      </Drawer>
+      </DrawerContainer>
     );
   }
 }

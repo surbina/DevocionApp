@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import {
   Text,
   View,
@@ -28,16 +27,16 @@ class DrawerMenu extends Component {
 
     this.state = {
       dataSource: ds.cloneWithRows([
-        {title: 'Devotional View', action: this._navigateToRoute.bind(this, DEVOTIONAL_VIEW_ROUTE_INDEX, {})},
-        {title: 'Calendar View', action: this._navigateToRoute.bind(this, CALENDAR_VIEW_ROUTE_INDEX)},
-        {title: 'Sign In', action: this._navigateToRoute.bind(this, SIGN_IN_ROUTE_INDEX)},
-        {title: 'Sign Up', action: this._navigateToRoute.bind(this, SIGN_UP_ROUTE_INDEX)},
-        {title: 'Reset Password', action: this._navigateToRoute.bind(this, RESET_PASSWORD_ROUTE_INDEX)},
-        {title: 'Sign Out', action: this._dispatchAction.bind(this, signOutAction)},
+        {title: 'Devotional View', action: this._handleNavigateToRoute.bind(this, DEVOTIONAL_VIEW_ROUTE_INDEX, {})},
+        {title: 'Calendar View', action: this._handleNavigateToRoute.bind(this, CALENDAR_VIEW_ROUTE_INDEX)},
+        {title: 'Sign In', action: this._handleNavigateToRoute.bind(this, SIGN_IN_ROUTE_INDEX)},
+        {title: 'Sign Up', action: this._handleNavigateToRoute.bind(this, SIGN_UP_ROUTE_INDEX)},
+        {title: 'Reset Password', action: this._handleNavigateToRoute.bind(this, RESET_PASSWORD_ROUTE_INDEX)},
+        {title: 'Sign Out', action: this._handleDispatchAction.bind(this, signOutAction)},
       ])
     };
 
-    this._renderMenuItem = this._renderMenuItem.bind(this);
+    this.renderMenuItem = this._renderMenuItem.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -56,12 +55,12 @@ class DrawerMenu extends Component {
     );
   }
 
-  _navigateToRoute(index, params) {
-    this.props.navigator.replaceAtIndex({ index, params }, 0);
+  _handleNavigateToRoute(index, params) {
+    this.props.onNavigateToRoute(index, params);
   }
 
-  _dispatchAction(action) {
-    this.props.dispatch(action());
+  _handleDispatchAction(action) {
+    this.props.onDispatchAction(action);
   }
 
   render() {
@@ -70,19 +69,11 @@ class DrawerMenu extends Component {
         <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>Nombre: {this.props.user.get('user_first_name') || 'ANONIMO'}</Text>
         <ListView
           dataSource={this.state.dataSource}
-          renderRow={this._renderMenuItem}
+          renderRow={this.renderMenuItem}
         />
       </View>
     );
   }
 }
-
-function mapStateToProps(state) {
-  return {
-    user: state.user
-  };
-}
-
-export const DrawerMenuContainer = connect(mapStateToProps)(DrawerMenu);
 
 export default DrawerMenu;
