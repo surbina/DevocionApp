@@ -9,6 +9,7 @@
     "firebase": "^3.4.0",
     "immutable": "^3.8.1",
     "moment": "^2.15.1",
+    "native-base": "^0.5.9",
     "react": "15.2.1",
     "react-addons-shallow-compare": "15.2.1",
     "react-native": "0.31.0",
