@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
+  Container,
+  Content,
   Text,
-  View
-} from 'react-native';
+  Spinner
+} from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import { DEVOTIONAL_VIEW_ROUTE_INDEX } from '../../../Navigation.js';
@@ -32,10 +34,17 @@ class SplashScreenView extends Component {
 
   render() {
     return (
-      <View>
+    <Container> 
+      <Content contentContainerStyle={{
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
         <Text>Bienvenido a DevocionApp</Text>
-        <Text>Cargando ...</Text>
-      </View>
+        <Spinner color='blue' />
+      </Content>
+    </Container>
     );
   }
 }

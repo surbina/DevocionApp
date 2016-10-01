@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import {
-  Text,
-  View
-} from 'react-native';
+  Container,
+  Header,
+  Title,
+  Content,
+  Spinner
+} from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import { DrawerContainer } from '../../../components/drawer/Drawer.js';
@@ -43,15 +46,17 @@ class DevotionalView extends Component {
       this.props.params.devotionalDate :
       moment().format('YYYY-MM-DD');
 
-    this.onPreviousDevotional(devotionalDate);
+    this.props.dispatch(loadCurrentOrPreviousDevotionalAction(devotionalDate, this.onDevotionalNotFound));
   }
 
   _onPreviousDevotional(devotionalDate) {
     this.props.dispatch(loadCurrentOrPreviousDevotionalAction(devotionalDate, this.onDevotionalNotFound));
+    this._content._scrollview.scrollToPosition(0, 0, true);
   }
 
   _onNextDevotional(devotionalDate) {
     this.props.dispatch(loadCurrentOrNextDevotionalAction(devotionalDate, this.onDevotionalNotFound));
+    this._content._scrollview.scrollToPosition(0, 0, true);
   }
 
   _onViewComments() {
@@ -64,16 +69,21 @@ class DevotionalView extends Component {
 
   render() {
     return (
-      this.props.loadingDevotional ?
-      <View>
-        <Text>Loading ...</Text>
-      </View> :
       <DrawerContainer navigator={this.props.navigator}>
-        <DevotionalContent
-          devotional={this.props.devotional}
-          onPreviousAction={this.onPreviousDevotional}
-          onNextAction={this.onNextDevotional}
-          onViewCommentsAction={this.onViewComments} />
+        <Container> 
+          <Header>
+            <Title>Devocional</Title>
+          </Header>
+          <Content ref={c => this._content = c}>
+            {this.props.loadingDevotional ?
+              <Spinner color='blue' /> :
+              <DevotionalContent
+                devotional={this.props.devotional}
+                onPreviousAction={this.onPreviousDevotional}
+                onNextAction={this.onNextDevotional}
+                onViewCommentsAction={this.onViewComments} />}
+          </Content>
+        </Container>
       </DrawerContainer>
     );
   }

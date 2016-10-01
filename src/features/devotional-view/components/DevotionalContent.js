@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import {
-  Text,
-  TouchableHighlight,
   View,
-  ScrollView,
   StyleSheet
 } from 'react-native';
+import {
+  Text,
+  Spinner,
+  Button
+} from 'native-base';
+
 import shallowCompare from 'react-addons-shallow-compare';
 
 class DevotionalContent extends Component {
@@ -39,69 +42,65 @@ class DevotionalContent extends Component {
   render() {
     return (
       !!this.props.devotional ?
-        <ScrollView>
-          <View>
-            <Text>{this.props.devotional.get('title')}</Text>
+        <View style={styles.mainContainer}>
+          <View style={[styles.centerContent, styles.row]}>
+            <Text style={styles.textTitle}>{this.props.devotional.get('title')}</Text>
           </View>
-          <View>
+          <View style={[styles.centerContent, styles.row]}>
             <Text>{this.props.devotional.get('author_name')}</Text>
           </View>
-          <View>
-            <Text>{this.props.devotional.get('passage')} - {this.props.devotional.get('publish_date')}</Text>
+          <View style={[styles.centerContent, styles.row]}>
+            <Text>{this.props.devotional.get('passage')} - {moment(this.props.devotional.get('publish_date')).format('LL')}</Text>
           </View>
-          <View>
+          <View style={styles.row}>
             <Text>{this.props.devotional.get('body')}</Text>
           </View>
-          <View>
-            <TouchableHighlight
-              onPress={this.handlePreviousAction}
-              style={styles.buttonPrev} >
-                <Text>PREV</Text>
-            </TouchableHighlight>
+          <View style={styles.buttonContainer}>
+            <Button onPress={this.handlePreviousAction}>
+              Anterior
+            </Button>
+            <Button onPress={this.handleViewCommentsAction}>
+              Ver Comentarios
+            </Button>
+            <Button onPress={this.handleNextAction}>
+              Siguiente
+            </Button>
           </View>
-          <View>
-            <TouchableHighlight
-              onPress={this.handleNextAction}
-              style={styles.buttonNext} >
-                <Text>NEXT</Text>
-            </TouchableHighlight>
-          </View>
-          <View>
-            <TouchableHighlight
-              onPress={this.handleViewCommentsAction}
-              style={styles.buttonView} >
-                <Text>VIEW COMMENTS</Text>
-            </TouchableHighlight>
-          </View>
-        </ScrollView> :
-        <View>
-          <Text>Loading ...</Text>
-        </View>
+        </View> :
+        <Spinner color='blue' />
     );
   }
 }
 
 const styles = StyleSheet.create({
-  buttonPrev: {
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    height: 100,
-    backgroundColor: 'red'
+  mainContainer: {
+    paddingTop: 5,
+    paddingRight: 5,
+    paddingBottom: 30,
+    paddingLeft: 5
   },
-  buttonNext: {
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    height: 100,
-    backgroundColor: 'blue'
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
-  buttonView: {
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    height: 100,
-    backgroundColor: 'green'
+  row: {
+    marginBottom: 5
+  },
+  centerContent: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  textTitle: {
+    fontWeight: 'bold',
+    fontSize: 20
+  },
+  textAuthor: {
+    fontSize: 14
+  },
+  textPassage: {
+    fontSize: 18
   }
 });
 
