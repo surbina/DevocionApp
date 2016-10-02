@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import {
-  Text,
-  View
-} from 'react-native';
+  Container,
+  Header,
+  Title,
+  Content,
+  Text
+} from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
 
+import commonStyles from '../../../commonStyles.js';
 import CommentForm from '../components/CommentForm.js';
 import CommentList from '../components/CommentList.js';
 
@@ -41,15 +45,19 @@ class CommentView extends Component {
 
   render() {
     return (
-      <View>
-        <Text>CommentView</Text>
-        <CommentForm
-          user={this.props.user}
-          onCommentSubmit={this.handleCommentSubmit} />
-        {this.getComments().size > 0 ?
-            <CommentList comments={this.getComments()} />:
-            <Text>Todavía no han comentado este devocional.</Text>}
-      </View>
+      <Container>
+        <Header>
+          <Title>Comentarios</Title>
+        </Header>
+        <Content style={commonStyles.content}>
+          <CommentForm
+            user={this.props.user}
+            onCommentSubmit={this.handleCommentSubmit} />
+          {this.getComments().size > 0 ?
+              <CommentList comments={this.getComments()} />:
+              <Text>Todavía no han comentado este devocional.</Text>}
+        </Content>
+      </Container>
     );
   }
 }

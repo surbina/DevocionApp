@@ -9,7 +9,7 @@ import store from './store.js';
 import Navigation from './Navigation.js';
 
 firebase.initializeApp(firebaseConfig);
-moment.locale('es', esLocale);
+moment.updateLocale('es', esLocale);
 
 class DevocionApp extends Component {
   render() {

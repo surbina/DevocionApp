@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
-  Text,
-  ScrollView
+  View,
+  StyleSheet
 } from 'react-native';
 import shallowCompare from 'react-addons-shallow-compare';
 
@@ -14,13 +14,13 @@ class CommentList extends Component {
   
   render() {
     return(
-      <ScrollView>
+      <View>
         {this.props.comments.valueSeq().map(comment => 
           <CommentItem
             key={comment.get('id')}
             comment={comment} />
         )}
-      </ScrollView>
+      </View>
     );
   }
 }

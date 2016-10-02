@@ -74,10 +74,7 @@ class DevotionalContent extends Component {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    paddingTop: 5,
-    paddingRight: 5,
     paddingBottom: 30,
-    paddingLeft: 5
   },
   buttonContainer: {
     flex: 1,

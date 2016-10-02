@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import {
-  Text,
   View,
-  TextInput,
-  TouchableHighlight,
   StyleSheet
 } from 'react-native';
+import {
+  Input,
+  InputGroup,
+  Button
+} from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
 
 class CommentForm extends Component {
@@ -42,30 +44,31 @@ class CommentForm extends Component {
 
   render() {
     return(
-      <View>
-        <Text>Comment Form!</Text>
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(comment_body) => this.setState({comment_body})}
-          placeholder="Comentario"
-        />
-        <TouchableHighlight
-          onPress={this.handleFormSubmit}
-          style={styles.buttonPrev} >
-            <Text>GUARDAR COMENTARIO</Text>
-        </TouchableHighlight>
+      <View style={styles.container}>
+        <InputGroup>
+          <Input
+            onChangeText={(comment_body) => this.setState({comment_body})}
+            placeholder='Comentario' />
+        </InputGroup>
+        <Button style={styles.button} onPress={this.handleFormSubmit}>
+          Comentar
+        </Button>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  buttonPrev: {
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    height: 100,
-    backgroundColor: 'red'
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 5
+  },
+  button: {
+    alignSelf: 'center',
+    marginTop: 5
   }
 });
 
