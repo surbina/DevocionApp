@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text,
-  TextInput,
-  TouchableHighlight,
   StyleSheet
 } from 'react-native';
+
+import {
+  Input,
+  InputGroup,
+  Button,
+  Icon
+} from 'native-base';
+
 import shallowCompare from 'react-addons-shallow-compare';
 
 class SignInForm extends Component {
@@ -40,34 +45,42 @@ class SignInForm extends Component {
 
   render() {
     return (
-      <View>
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(email) => this.setState({email})}
-          placeholder="Email"
-        />
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(password) => this.setState({password})}
-          placeholder="Password"
-        />
-        <TouchableHighlight
-          onPress={this.handleFormSubmit}
-          style={styles.buttonPrev} >
-            <Text>INGRESAR</Text>
-        </TouchableHighlight>
+      <View style={styles.form}>
+        <InputGroup>
+          <Icon name='ios-person' />
+          <Input
+            onChangeText={(email) => this.setState({email})}
+            placeholder='Email' />
+        </InputGroup>
+        <InputGroup>
+          <Icon name='ios-unlock' />
+          <Input
+            onChangeText={(password) => this.setState({password})}
+            placeholder='Contraseña'
+            secureTextEntry={true} />
+        </InputGroup>
+        <Button
+          style={styles.button}
+          onPress={this.handleFormSubmit}>
+          Ingresar
+        </Button>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  buttonPrev: {
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    height: 100,
-    backgroundColor: 'red'
+  form: {
+    borderWidth: 1,
+    borderColor: '#DDD',
+    width: 300,
+    padding: 10,
+    top: -50,
+    borderRadius: 4
+  },
+  button: {
+    alignSelf: 'center',
+    marginTop: 10
   }
 });
 

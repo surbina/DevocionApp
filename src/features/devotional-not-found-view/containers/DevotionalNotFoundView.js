@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import {
-  Text,
-  View
-} from 'react-native';
+  Container,
+  Header,
+  Title,
+  Content,
+  Text
+} from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import { DrawerContainer } from '../../../components/drawer/Drawer.js'
+import commonStyles from '../../../commonStyles.js';
 
 class DevotionalNotFound extends Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -15,11 +19,14 @@ class DevotionalNotFound extends Component {
   render() {
     return (
       <DrawerContainer navigator={this.props.navigator}>
-        <View>
-          <Text>
-            No hemos encontrado un devocional para esa fecha.
-          </Text>
-        </View>
+        <Container>
+          <Header>
+            <Title>Devocional no encontrado</Title>
+          </Header>
+          <Content style={commonStyles.content}>
+            <Text>No hemos encontrado un devocional para esa fecha.</Text>
+          </Content>
+        </Container>
       </DrawerContainer>
     );
   }

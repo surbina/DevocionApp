@@ -50,7 +50,9 @@ class CommentForm extends Component {
             onChangeText={(comment_body) => this.setState({comment_body})}
             placeholder='Comentario' />
         </InputGroup>
-        <Button style={styles.button} onPress={this.handleFormSubmit}>
+        <Button
+          style={styles.button}
+          onPress={this.handleFormSubmit}>
           Comentar
         </Button>
       </View>
