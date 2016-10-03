@@ -1,8 +1,10 @@
 import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
+const styles = StyleSheet.create({
   content: {
     padding: 5,
     backgroundColor: 'white'
   }
 });
+
+export default styles.content;

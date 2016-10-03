@@ -9,7 +9,7 @@ import {
 import shallowCompare from 'react-addons-shallow-compare';
 
 import { DrawerContainer } from '../../../components/drawer/Drawer.js'
-import commonStyles from '../../../commonStyles.js';
+import contentStyle from '../../../styles/content.js';
 
 class DevotionalNotFound extends Component {
   shouldComponentUpdate(nextProps, nextState) {
@@ -23,7 +23,7 @@ class DevotionalNotFound extends Component {
           <Header>
             <Title>Devocional no encontrado</Title>
           </Header>
-          <Content style={commonStyles.content}>
+          <Content style={contentStyle}>
             <Text>No hemos encontrado un devocional para esa fecha.</Text>
           </Content>
         </Container>

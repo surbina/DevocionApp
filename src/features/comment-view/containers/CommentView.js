@@ -10,7 +10,7 @@ import {
 } from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
 
-import commonStyles from '../../../commonStyles.js';
+import contentStyle from '../../../styles/content.js';
 import CommentForm from '../components/CommentForm.js';
 import CommentList from '../components/CommentList.js';
 
@@ -49,7 +49,7 @@ class CommentView extends Component {
         <Header>
           <Title>Comentarios</Title>
         </Header>
-        <Content style={commonStyles.content}>
+        <Content style={contentStyle}>
           <CommentForm
             user={this.props.user}
             onCommentSubmit={this.handleCommentSubmit} />

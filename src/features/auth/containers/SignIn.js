@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import {
   Container,
   Header,
@@ -13,7 +12,7 @@ import { DrawerContainer } from '../../../components/drawer/Drawer.js';
 import SignInForm from '../components/SignInForm.js';
 import { signInAction } from '../../../reducers/user/actions.js';
 import { DEVOTIONAL_VIEW_ROUTE_INDEX } from '../../../Navigation.js';
-import commonStyles from '../../../commonStyles.js';
+import contentStyle from '../../../styles/content.js';
 
 class SignIn extends Component {
   constructor(props) {
@@ -46,7 +45,7 @@ class SignIn extends Component {
             <Title>Ingresa a la aplicación</Title>
           </Header>
           <Content
-            style={commonStyles.content}
+            style={contentStyle}
             contentContainerStyle={{
               flex: 1,
               flexDirection: 'column',

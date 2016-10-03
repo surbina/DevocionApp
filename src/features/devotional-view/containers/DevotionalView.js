@@ -12,7 +12,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 
 import { DrawerContainer } from '../../../components/drawer/Drawer.js';
 import DevotionalContent from '../components/DevotionalContent.js';
-import commonStyles from '../../../commonStyles.js';
+import contentStyle from '../../../styles/content.js';
 
 import {
   loadCurrentOrPreviousDevotionalAction,
@@ -76,7 +76,7 @@ class DevotionalView extends Component {
             <Title>Devocional</Title>
           </Header>
           <Content
-            style={commonStyles.content}
+            style={contentStyle}
             ref={c => this._content = c}>
             {this.props.loadingDevotional ?
               <Spinner color='blue' /> :

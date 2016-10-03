@@ -35,13 +35,13 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontWeight: 'bold',
-    fontSize: 12
+    fontSize: 14
   },
   commentBody: {
-    fontSize: 12
+    fontSize: 14
   },
   date: {
-    fontSize: 8
+    fontSize: 10
   }
 });
 
