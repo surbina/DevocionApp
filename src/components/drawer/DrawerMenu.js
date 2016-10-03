@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import {
-  Text,
   View,
-  ListView,
-  TouchableHighlight
+  ScrollView,
+  StyleSheet
 } from 'react-native';
+
+import {
+  List,
+  ListItem,
+  Text
+} from 'native-base';
+
 import shallowCompare from 'react-addons-shallow-compare';
 
 import {
@@ -26,39 +32,24 @@ class DrawerMenu extends Component {
   constructor(props) {
     super(props);
 
-    const ds = new ListView.DataSource({
-      rowHasChanged: (row1, row2) => row1 !== row2
-    });
-
     this.state = {
-      dataSourceCommonSections: ds.cloneWithRows([
+      itemsCommonSections: [
         {title: 'Devotional View', action: this._handleNavigateToRoute.bind(this, DEVOTIONAL_VIEW_ROUTE_INDEX, {})},
         {title: 'Calendar View', action: this._handleNavigateToRoute.bind(this, CALENDAR_VIEW_ROUTE_INDEX)}
-      ]),
-      dataSourceAnonymousUser: ds.cloneWithRows([
+      ],
+      itemsAnonymousUser: [
         {title: 'Sign In', action: this._handleNavigateToRoute.bind(this, SIGN_IN_ROUTE_INDEX)},
         {title: 'Sign Up', action: this._handleNavigateToRoute.bind(this, SIGN_UP_ROUTE_INDEX)},
         {title: 'Reset Password', action: this._handleNavigateToRoute.bind(this, RESET_PASSWORD_ROUTE_INDEX)}
-      ])
+      ],
+      itemsLoggedUser: [
+        {title: 'Salir', action: this._handleDispatchAction.bind(this, signOutAction)}
+      ]
     };
-
-    this.renderMenuItem = this._renderMenuItem.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
-  }
-
-  _renderMenuItem(item) {
-    return(
-      <TouchableHighlight
-        style={{height: 50}}
-        activeOpacity={0.6}
-        underlayColor={'white'}
-        onPress={item.action}>
-        <Text>{item.title}</Text>
-      </TouchableHighlight>
-    );
   }
 
   _handleNavigateToRoute(index, params) {
@@ -69,29 +60,82 @@ class DrawerMenu extends Component {
     this.props.onDispatchAction(action);
   }
 
+  _renderRow(item) {
+    return(
+      <ListItem button onPress={item.action}>
+        <Text>{item.title}</Text>
+      </ListItem>
+    );
+  }
+
   render() {
+    let navigationItems;
+
+    if(this.props.user.get('status') === ANONYMOUS_USER_STATUS) {
+      navigationItems = this.state.itemsCommonSections.concat(this.state.itemsAnonymousUser);
+    }
+    else if(this.props.user.get('status') === SIGNED_USER_STATUS) {
+      navigationItems = this.state.itemsCommonSections.concat(this.state.itemsLoggedUser);
+    }
+
+    const userName = this.props.user.get('user_first_name') || 'Anonimo';
+    const avatarChar = userName.charAt(0);
+
     return (
-      <View style={{flex: 1, backgroundColor: '#fff'}}>
-        <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>Nombre: {this.props.user.get('user_first_name') || 'ANONIMO'}</Text>
-        <ListView
-          dataSource={this.state.dataSourceCommonSections}
-          renderRow={this.renderMenuItem} />
-        {this.props.user.get('status') === ANONYMOUS_USER_STATUS ?
-          <ListView
-            dataSource={this.state.dataSourceAnonymousUser}
-            renderRow={this.renderMenuItem} /> :
-        this.props.user.get('status') === SIGNED_USER_STATUS ?
-          <TouchableHighlight
-            style={{height: 50}}
-            activeOpacity={0.6}
-            underlayColor={'white'}
-            onPress={this._handleDispatchAction.bind(this, signOutAction)}>
-            <Text>Sign out</Text>
-          </TouchableHighlight> :
-          false}
+      <View style={styles.menuContainer}>
+        <View style={styles.avatarContainer}>
+          <View style={styles.avatar}>
+            <Text style={styles.userChar}>{avatarChar}</Text>
+          </View>
+          <Text style={styles.userName}>{userName}</Text>
+        </View>
+        <ScrollView style={styles.itemContainer}>
+          <List
+            dataArray={navigationItems}
+            renderRow={this._renderRow} />
+        </ScrollView>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  menuContainer: {
+    flex: 1,
+    backgroundColor: '#fff'
+  },
+  avatarContainer: {
+    flex: 3,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    borderBottomWidth: 1,
+    borderBottomColor: '#555'
+  },
+  avatar: {
+    height: 70,
+    width: 70,
+    borderRadius: 35,
+    backgroundColor: '#7FFFD4',
+    borderWidth: 2,
+    borderColor: '#555',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  userChar: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#555'
+  },
+  userName: {
+    fontSize: 24,
+    fontWeight: 'bold'
+  },
+  itemContainer: {
+    flex: 7
+  }
+});
 
 export default DrawerMenu;
