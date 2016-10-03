@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  Text
-} from 'react-native';
+  Container,
+  Header,
+  Title,
+  Content
+} from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import {
@@ -13,8 +16,8 @@ import {
 
 import { DrawerContainer } from '../../../components/drawer/Drawer.js';
 import SignUpForm from '../components/SignUpForm.js';
-
 import { createNewUserAction } from '../../../reducers/user/actions.js';
+import contentStyle from '../../../styles/content.js';
 
 class SignUp extends Component {
   constructor(props) {
@@ -42,11 +45,27 @@ class SignUp extends Component {
   render() {
     return (
       <DrawerContainer navigator={this.props.navigator}>
-        <SignUpForm onSignUpSubmit={this.handleSubmitSignUp} />
+        <Container> 
+          <Header>
+            <Title>Registrate</Title>
+          </Header>
+          <Content
+            style={contentStyle}
+            contentContainerStyle={contentContainerStyle}>
+            <SignUpForm onSignUpSubmit={this.handleSubmitSignUp} />
+          </Content>
+        </Container>
       </DrawerContainer>
     );
   }
 }
+
+const contentContainerStyle = {
+  flex: 1,
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+};
 
 function mapStateToProps(state) {
   return {

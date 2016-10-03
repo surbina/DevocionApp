@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import {
-  View,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  StyleSheet
+  View
 } from 'react-native';
+import {
+  Input,
+  InputGroup,
+  Button,
+  Icon
+} from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
+
+import authFormStyle from '../../../styles/authForm.js';
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -19,6 +23,8 @@ class SignUpForm extends Component {
       password: '',
       confirmPassword: '',
     };
+
+    this.handleFormSubmit = this._handleFormSubmit.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -51,51 +57,42 @@ class SignUpForm extends Component {
 
   render() {
     return (
-      <View>
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(firstName) => this.setState({firstName})}
-          placeholder="Nombre"
-        />
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(lastName) => this.setState({lastName})}
-          placeholder="Apellido"
-        />
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(email) => this.setState({email})}
-          placeholder="Email"
-        />
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(password) => this.setState({password})}
-          placeholder="Contraseña"
-        />
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(confirmPassword) => this.setState({confirmPassword})}
-          placeholder="Confirmar Contraseña"
-        />
-        <TouchableHighlight
-          onPress={this._handleFormSubmit.bind(this)}
-          style={styles.buttonPrev} >
-            <Text>Registrarse</Text>
-        </TouchableHighlight>
+      <View style={authFormStyle.form}>
+        <InputGroup>
+          <Input
+            onChangeText={(firstName) => this.setState({firstName})}
+            placeholder='Nombre' />
+        </InputGroup>
+        <InputGroup>
+          <Input
+            onChangeText={(lastName) => this.setState({lastName})}
+            placeholder='Apellido' />
+        </InputGroup>
+        <InputGroup>
+          <Input
+            onChangeText={(email) => this.setState({email})}
+            placeholder='Email' />
+        </InputGroup>
+        <InputGroup>
+          <Input
+            onChangeText={(password) => this.setState({password})}
+            placeholder='Contraseña'
+            secureTextEntry={true} />
+        </InputGroup>
+        <InputGroup>
+          <Input
+            onChangeText={(confirmPassword) => this.setState({confirmPassword})}
+            placeholder='Confirmar Contraseña'
+            secureTextEntry={true} />
+        </InputGroup>
+        <Button
+          style={authFormStyle.button}
+          onPress={this.handleFormSubmit}>
+          Registrarse
+        </Button>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  buttonPrev: {
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    height: 100,
-    backgroundColor: 'red'
-  }
-});
-
 
 export default SignUpForm;

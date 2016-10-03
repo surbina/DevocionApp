@@ -46,12 +46,7 @@ class SignIn extends Component {
           </Header>
           <Content
             style={contentStyle}
-            contentContainerStyle={{
-              flex: 1,
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+            contentContainerStyle={contentContainerStyle}>
             <SignInForm onSignInSubmit={this.handleSubmitSignIn} />
           </Content>
         </Container>
@@ -59,6 +54,13 @@ class SignIn extends Component {
     );
   }
 }
+
+const contentContainerStyle = {
+  flex: 1,
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+};
 
 function mapStateToProps(state) {
   return {};

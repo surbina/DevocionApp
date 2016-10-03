@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import {
-  View,
-  StyleSheet
+  View
 } from 'react-native';
-
 import {
   Input,
   InputGroup,
-  Button,
-  Icon
+  Button
 } from 'native-base';
-
 import shallowCompare from 'react-addons-shallow-compare';
+
+import authFormStyle from '../../../styles/authForm.js';
 
 class SignInForm extends Component {
   constructor(props) {
@@ -45,22 +43,20 @@ class SignInForm extends Component {
 
   render() {
     return (
-      <View style={styles.form}>
+      <View style={authFormStyle.form}>
         <InputGroup>
-          <Icon name='ios-person' />
           <Input
             onChangeText={(email) => this.setState({email})}
             placeholder='Email' />
         </InputGroup>
         <InputGroup>
-          <Icon name='ios-unlock' />
           <Input
             onChangeText={(password) => this.setState({password})}
             placeholder='Contraseña'
             secureTextEntry={true} />
         </InputGroup>
         <Button
-          style={styles.button}
+          style={authFormStyle.button}
           onPress={this.handleFormSubmit}>
           Ingresar
         </Button>
@@ -68,21 +64,5 @@ class SignInForm extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  form: {
-    borderWidth: 1,
-    borderColor: '#DDD',
-    width: 300,
-    padding: 10,
-    top: -50,
-    borderRadius: 4
-  },
-  button: {
-    alignSelf: 'center',
-    marginTop: 10
-  }
-});
-
 
 export default SignInForm;

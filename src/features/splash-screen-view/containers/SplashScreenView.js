@@ -35,12 +35,7 @@ class SplashScreenView extends Component {
   render() {
     return (
     <Container> 
-      <Content contentContainerStyle={{
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
+      <Content contentContainerStyle={contentContainerStyle}>
         <Text>Bienvenido a DevocionApp</Text>
         <Spinner color='blue' />
       </Content>
@@ -48,6 +43,13 @@ class SplashScreenView extends Component {
     );
   }
 }
+
+const contentContainerStyle = {
+  flex: 1,
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+};
 
 function mapStateToProps(state) {
   return {};
