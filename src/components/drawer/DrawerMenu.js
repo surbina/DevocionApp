@@ -8,8 +8,10 @@ import {
 import {
   List,
   ListItem,
-  Text
+  Text,
+  Icon
 } from 'native-base';
+import _ from 'lodash';
 
 import shallowCompare from 'react-addons-shallow-compare';
 
@@ -34,16 +36,43 @@ class DrawerMenu extends Component {
 
     this.state = {
       itemsCommonSections: [
-        {title: 'Devotional View', action: this._handleNavigateToRoute.bind(this, DEVOTIONAL_VIEW_ROUTE_INDEX, {})},
-        {title: 'Calendar View', action: this._handleNavigateToRoute.bind(this, CALENDAR_VIEW_ROUTE_INDEX)}
+        {
+          title: 'Devocionales',
+          action: this._handleNavigateToRoute.bind(this, DEVOTIONAL_VIEW_ROUTE_INDEX, {}),
+          icon: 'newspaper-o'
+        },
+        {
+          title: 'Calendario',
+          action: this._handleNavigateToRoute.bind(this, CALENDAR_VIEW_ROUTE_INDEX),
+          icon: 'calendar',
+          style: {borderBottomWidth: 1}
+        }
       ],
       itemsAnonymousUser: [
-        {title: 'Sign In', action: this._handleNavigateToRoute.bind(this, SIGN_IN_ROUTE_INDEX)},
-        {title: 'Sign Up', action: this._handleNavigateToRoute.bind(this, SIGN_UP_ROUTE_INDEX)},
-        {title: 'Reset Password', action: this._handleNavigateToRoute.bind(this, RESET_PASSWORD_ROUTE_INDEX)}
+        {
+          title: 'Ingresar',
+          action: this._handleNavigateToRoute.bind(this, SIGN_IN_ROUTE_INDEX),
+          icon: 'sign-in'
+        },
+        {
+          title: 'Registrarse',
+          action: this._handleNavigateToRoute.bind(this, SIGN_UP_ROUTE_INDEX),
+          icon: 'user'
+        },
+        {
+          title: 'Reiniciar contraseña',
+          action: this._handleNavigateToRoute.bind(this, RESET_PASSWORD_ROUTE_INDEX),
+          icon: 'lock',
+          style: {borderBottomWidth: 1}
+        }
       ],
       itemsLoggedUser: [
-        {title: 'Salir', action: this._handleDispatchAction.bind(this, signOutAction)}
+        {
+          title: 'Salir',
+          action: this._handleDispatchAction.bind(this, signOutAction),
+          icon: 'sign-out',
+          style: {borderBottomWidth: 1}
+        }
       ]
     };
   }
@@ -61,8 +90,26 @@ class DrawerMenu extends Component {
   }
 
   _renderRow(item) {
+    let computedStyle = {};
+    const defaultStyle = {
+      borderBottomWidth: 0,
+      marginLeft: 0,
+      paddingLeft: 25
+    };
+
+    const itemStyle = item.style || {};
+
+    _.merge(computedStyle, defaultStyle, itemStyle);
+
     return(
-      <ListItem button onPress={item.action}>
+      <ListItem
+        button
+        iconLeft
+        onPress={item.action}
+        style={computedStyle}>
+        <Icon
+          name={item.icon}
+          theme={{iconFamily: 'FontAwesome'}} />
         <Text>{item.title}</Text>
       </ListItem>
     );
