@@ -4,7 +4,8 @@ import {
   Text,
   View,
   Navigator,
-  TouchableHighlight
+  TouchableHighlight,
+  BackAndroid
 } from 'react-native';
 
 import CalendarView from './features/calendar-view/containers/CalendarView.js';
@@ -26,6 +27,20 @@ export const SIGN_UP_ROUTE_INDEX = 'SIGN_UP';
 export const RESET_PASSWORD_ROUTE_INDEX = 'RESET_PASSWORD';
 
 class Navigation extends Component {
+  constructor(props) {
+    super(props);
+
+    BackAndroid.addEventListener('hardwareBackPress', this._handleHardwareBackPress.bind(this));
+  }
+
+  _handleHardwareBackPress() {
+    if (this.navigator && this.navigator.getCurrentRoutes().length > 1) {
+      this.navigator.pop();
+      return true;
+    }
+    return false;
+  }
+
   _renderScene(route, navigator) {
     switch(route.index) {
       case SPLASH_SCREEN_VIEW_ROUTE_INDEX:
@@ -56,6 +71,7 @@ class Navigation extends Component {
 
     return (
       <Navigator
+        ref={(nav) => { this.navigator = nav; }}
         initialRoute={initialRoute}
         renderScene={this._renderScene}
       />
