@@ -16,6 +16,9 @@ class Drawer extends Component {
     this.renderDrawerMenu = this._renderDrawerMenu.bind(this);
     this.navigateToRoute = this._navigateToRoute.bind(this);
     this.dispatchAction = this._dispatchAction.bind(this);
+
+    this.openDrawer = this._openDrawer.bind(this);
+    this.closeDrawer = this._closeDrawer.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -39,12 +42,21 @@ class Drawer extends Component {
     this.props.dispatch(action());
   }
 
+  _openDrawer() {
+    this.drawerLayout.openDrawer();
+  }
+
+  _closeDrawer() {
+    this.drawerLayout.closeDrawer();
+  }
+
   render() {
     return (
       <DrawerLayoutAndroid
         drawerWidth={300}
         drawerPosition={DrawerLayoutAndroid.positions.Left}
-        renderNavigationView={this.renderDrawerMenu}>
+        renderNavigationView={this.renderDrawerMenu}
+        ref={d => this.drawerLayout = d}>
         
       { this.props.children }
 
