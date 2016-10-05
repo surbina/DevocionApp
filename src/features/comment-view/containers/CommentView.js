@@ -12,6 +12,11 @@ import {
 } from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
 
+import {
+  SIGN_IN_ROUTE_INDEX,
+  SIGN_UP_ROUTE_INDEX
+} from '../../../Navigation.js';
+
 import contentStyle from '../../../styles/content.js';
 import CommentForm from '../components/CommentForm.js';
 import CommentList from '../components/CommentList.js';
@@ -27,6 +32,8 @@ class CommentView extends Component {
 
     this.getComments = this._getComments.bind(this);
     this.handleCommentSubmit = this._handleCommentSubmit.bind(this);
+    this.handleNavigateSignIn = this._handleNavigateSignIn.bind(this);
+    this.handleNavigateSignUp = this._handleNavigateSignUp.bind(this);
     this.handleBackAction = this._handleBackAction.bind(this);
   }
 
@@ -44,6 +51,22 @@ class CommentView extends Component {
 
   _handleCommentSubmit (comment) {
     this.props.dispatch(postCommentAction(this.props.devotionalId, comment));    
+  }
+
+  _handleNavigateSignIn() {
+    this.props.navigator.pop();
+    this.props.navigator.replaceAtIndex({
+      index: SIGN_IN_ROUTE_INDEX,
+      params: {}
+    }, 0);
+  }
+
+  _handleNavigateSignUp() {
+    this.props.navigator.pop();
+    this.props.navigator.replaceAtIndex({
+      index: SIGN_UP_ROUTE_INDEX,
+      params: {}
+    }, 0);
   }
 
   _handleBackAction() {
@@ -64,7 +87,9 @@ class CommentView extends Component {
         <Content style={contentStyle}>
           <CommentForm
             user={this.props.user}
-            onCommentSubmit={this.handleCommentSubmit} />
+            onCommentSubmit={this.handleCommentSubmit}
+            onNavigateSignIn={this.handleNavigateSignIn}
+            onNavigateSignUp={this.handleNavigateSignUp} />
           {this.getComments().size > 0 ?
               <CommentList comments={this.getComments()} />:
               <Text>Todavía no han comentado este devocional.</Text>}

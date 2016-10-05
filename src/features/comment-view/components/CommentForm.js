@@ -7,9 +7,13 @@ import {
 import {
   Input,
   InputGroup,
-  Button
+  Button,
+  Text
 } from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
+import {
+  SIGNED_USER_STATUS
+} from '../../../reducers/user/reducer.js';
 
 class CommentForm extends Component {
   constructor(props) {
@@ -20,6 +24,8 @@ class CommentForm extends Component {
     };
 
     this.handleFormSubmit = this._handleFormSubmit.bind(this);
+    this.handleNavigateSignIn = this._handleNavigateSignIn.bind(this);
+    this.handleNavigateSignUp = this._handleNavigateSignUp.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -42,20 +48,47 @@ class CommentForm extends Component {
     });
   }
 
+  _handleNavigateSignIn() {
+    this.props.onNavigateSignIn();
+  }
+
+  _handleNavigateSignUp() {
+    this.props.onNavigateSignUp();
+  }
+
   render() {
     return(
-      <View style={styles.container}>
-        <InputGroup>
-          <Input
-            onChangeText={(comment_body) => this.setState({comment_body})}
-            placeholder='Comentario' />
-        </InputGroup>
-        <Button
-          style={styles.button}
-          onPress={this.handleFormSubmit}>
-          Comentar
-        </Button>
-      </View>
+      this.props.user.get('status') === SIGNED_USER_STATUS ?
+        <View style={styles.container}>
+          <InputGroup>
+            <Input
+              onChangeText={(comment_body) => this.setState({comment_body})}
+              placeholder='Comentario' />
+          </InputGroup>
+          <View style={styles.buttonContainer}>
+            <Button
+              style={styles.button}
+              onPress={this.handleFormSubmit}>
+              Comentar
+            </Button>
+          </View>
+        </View> :
+        <View style={styles.container}>
+          <Text>Debes estar registrado para poder comentar</Text>
+
+          <View style={styles.buttonContainer}>
+            <Button
+              style={styles.button}
+              onPress={this.handleNavigateSignIn}>
+              Ingresar
+            </Button>
+            <Button
+              style={styles.button}
+              onPress={this.handleNavigateSignUp}>
+              Registrarse
+            </Button>
+          </View>
+        </View>
     );
   }
 }
@@ -66,11 +99,22 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 5
+
+    marginBottom: 5,
+    padding: 10,
+
+    borderWidth: 1,
+    borderColor: '#DDD',
+    borderRadius: 4,
+  },
+  buttonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   button: {
-    alignSelf: 'center',
-    marginTop: 5
+    marginTop: 5,
+    marginRight: 5
   }
 });
 

@@ -6,8 +6,8 @@ const styles = StyleSheet.create({
     borderColor: '#DDD',
     width: 300,
     padding: 10,
-    top: -50,
-    borderRadius: 4
+    borderRadius: 4,
+    top: -50
   },
   button: {
     alignSelf: 'center',
