@@ -74,22 +74,14 @@ class DevotionalView extends Component {
   }
 
   _handleOpenDrawer() {
-    console.log('this.drawerContainer.shouldComponentUpdate: ', this.drawerContainer.shouldComponentUpdate);
-    console.log('this.drawerContainer.shouldComponentUpdate(): ', this.drawerContainer.shouldComponentUpdate());
-    console.log('this.drawerContainer.openDrawer: ', this.drawerContainer.openDrawer);
-    console.log('this.drawerContainer._openDrawer: ', this.drawerContainer._openDrawer);
-    console.log('this.drawerContainer.renderDrawerMenu: ', this.drawerContainer.renderDrawerMenu);
-    console.log('this.drawerContainer.pepe: ', this.drawerContainer.pepe);
-    debugger;
-    this.drawerContainer.openDrawer();
+    this.drawer.getWrappedInstance().openDrawer();
   }
 
   render() {
     return (
       <DrawerContainer
         navigator={this.props.navigator}
-        ref={assignDrawer.bind(this)}>
-
+        ref={d => this.drawer = d}>
         <Container> 
           <Header>
             <Button
@@ -111,23 +103,9 @@ class DevotionalView extends Component {
                 onViewCommentsAction={this.onViewComments} />}
           </Content>
         </Container>
-
       </DrawerContainer>
     );
   }
-}
-
-function assignDrawer(d) {
-  //ref={(d) => this.drawerContainer = d}
-  if(d) {
-    var a = _.clone(d);
-    //delete a.props;
-    //delete a.context;
-    console.log('a: ', a.props);
-    console.log('open: ', a.openDrawer);
-  }
-
-  this.drawerContainer = d
 }
 
 function mapStateToProps(state) {

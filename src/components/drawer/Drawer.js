@@ -43,11 +43,11 @@ class Drawer extends Component {
   }
 
   _openDrawer() {
-    this.drawerLayout.openDrawer();
+    this.drawer.openDrawer();
   }
 
   _closeDrawer() {
-    this.drawerLayout.closeDrawer();
+    this.drawer.closeDrawer();
   }
 
   render() {
@@ -56,7 +56,7 @@ class Drawer extends Component {
         drawerWidth={300}
         drawerPosition={DrawerLayoutAndroid.positions.Left}
         renderNavigationView={this.renderDrawerMenu}
-        ref={d => this.drawerLayout = d}>
+        ref={d => this.drawer = d}>
         
       { this.props.children }
 
@@ -71,6 +71,6 @@ function mapStateToProps(state) {
   };
 }
 
-export const DrawerContainer = connect(mapStateToProps)(Drawer);
+export const DrawerContainer = connect(mapStateToProps, null, null, {withRef: true})(Drawer);
 
 export default Drawer;
