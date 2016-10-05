@@ -6,7 +6,9 @@ import {
   Header,
   Title,
   Content,
-  Text
+  Text,
+  Button,
+  Icon
 } from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
 
@@ -25,6 +27,7 @@ class CommentView extends Component {
 
     this.getComments = this._getComments.bind(this);
     this.handleCommentSubmit = this._handleCommentSubmit.bind(this);
+    this.handleBackAction = this._handleBackAction.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -43,10 +46,19 @@ class CommentView extends Component {
     this.props.dispatch(postCommentAction(this.props.devotionalId, comment));    
   }
 
+  _handleBackAction() {
+    this.props.navigator.pop();
+  }
+
   render() {
     return (
       <Container>
         <Header>
+          <Button
+            transparent
+            onPress={this.handleBackAction}>
+            <Icon name='ios-arrow-back' />
+          </Button>
           <Title>Comentarios</Title>
         </Header>
         <Content style={contentStyle}>
