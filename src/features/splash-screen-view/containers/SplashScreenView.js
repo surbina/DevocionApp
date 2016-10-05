@@ -33,23 +33,23 @@ class SplashScreenView extends Component {
   }
 
   render() {
+    const contentContainerStyle = {
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    };
+    
     return (
-    <Container> 
-      <Content contentContainerStyle={contentContainerStyle}>
-        <Text>Bienvenido a DevocionApp</Text>
-        <Spinner color='blue' />
-      </Content>
-    </Container>
+      <Container> 
+        <Content contentContainerStyle={contentContainerStyle}>
+          <Text>Bienvenido a DevocionApp</Text>
+          <Spinner color='blue' />
+        </Content>
+      </Container>
     );
   }
 }
-
-const contentContainerStyle = {
-  flex: 1,
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-};
 
 function mapStateToProps(state) {
   return {};

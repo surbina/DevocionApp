@@ -4,7 +4,9 @@ import {
   Container,
   Header,
   Title,
-  Content
+  Content,
+  Button,
+  Icon
 } from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
 
@@ -20,6 +22,7 @@ class SignIn extends Component {
 
     this.handleSubmitSignIn = this._handleSubmitSignIn.bind(this);
     this.redirectOnSuccessSignIn = this._redirectOnSuccessSignIn.bind(this);
+    this.handleOpenDrawer = this._handleOpenDrawer.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -30,6 +33,10 @@ class SignIn extends Component {
     this.props.dispatch(signInAction(user, this.redirectOnSuccessSignIn));
   }
 
+  _handleOpenDrawer() {
+    this.drawer.getWrappedInstance().openDrawer();
+  }
+
   _redirectOnSuccessSignIn() {
     const item = {
       index: DEVOTIONAL_VIEW_ROUTE_INDEX
@@ -38,10 +45,24 @@ class SignIn extends Component {
   }
 
   render() {
+    const contentContainerStyle = {
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    };
+
     return (
-      <DrawerContainer navigator={this.props.navigator}>
+      <DrawerContainer
+        navigator={this.props.navigator}
+        ref={d => this.drawer = d}>
         <Container> 
           <Header>
+            <Button
+              transparent
+              onPress={this.handleOpenDrawer}>
+              <Icon name='ios-menu' />
+            </Button>
             <Title>Ingresa a la aplicación</Title>
           </Header>
           <Content
@@ -54,13 +75,6 @@ class SignIn extends Component {
     );
   }
 }
-
-const contentContainerStyle = {
-  flex: 1,
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-};
 
 function mapStateToProps(state) {
   return {};

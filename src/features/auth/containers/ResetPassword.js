@@ -4,7 +4,9 @@ import {
   Container,
   Header,
   Title,
-  Content
+  Content,
+  Button,
+  Icon
 } from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
 
@@ -18,6 +20,7 @@ class ResetPassword extends Component {
   constructor(props) {
     super(props);
     this.handleResetPasswordSubmit = this._handleResetPasswordSubmit.bind(this);
+    this.handleOpenDrawer = this._handleOpenDrawer.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -28,11 +31,29 @@ class ResetPassword extends Component {
     this.props.dispatch(sendResetPasswordMailAction(email));
   }
 
+  _handleOpenDrawer() {
+    this.drawer.getWrappedInstance().openDrawer();
+  }
+
   render() {
+    const contentContainerStyle = {
+      flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    };
+    
     return (
-      <DrawerContainer navigator={this.props.navigator}>
+      <DrawerContainer
+        navigator={this.props.navigator}
+        ref={d => this.drawer = d}>
         <Container> 
           <Header>
+            <Button
+              transparent
+              onPress={this.handleOpenDrawer}>
+              <Icon name='ios-menu' />
+            </Button>
             <Title>Reiniciar contraseña</Title>
           </Header>
           <Content
@@ -47,13 +68,6 @@ class ResetPassword extends Component {
     );
   }
 }
-
-const contentContainerStyle = {
-  flex: 1,
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-};
 
 function mapStateToProps(state) {
   return {
