@@ -73,7 +73,9 @@ class SignUp extends Component {
           <Content
             style={contentStyle}
             contentContainerStyle={contentContainerStyle}>
-            <SignUpForm onSignUpSubmit={this.handleSubmitSignUp} />
+            <SignUpForm
+              onSignUpSubmit={this.handleSubmitSignUp}
+              isSigningUp={this.props.isSigningUp} />
           </Content>
         </Container>
       </DrawerContainer>

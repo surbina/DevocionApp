@@ -15,6 +15,11 @@ import SignInForm from '../components/SignInForm.js';
 import { signInAction } from '../../../reducers/user/actions.js';
 import { DEVOTIONAL_VIEW_ROUTE_INDEX } from '../../../Navigation.js';
 import contentStyle from '../../../styles/content.js';
+import {
+  SIGNING_IN_STATUS,
+  VALID_USER_STATUS,
+  FETCHING_USER_DATA_STATUS
+} from '../../../reducers/user/reducer.js'
 
 class SignIn extends Component {
   constructor(props) {
@@ -68,7 +73,9 @@ class SignIn extends Component {
           <Content
             style={contentStyle}
             contentContainerStyle={contentContainerStyle}>
-            <SignInForm onSignInSubmit={this.handleSubmitSignIn} />
+            <SignInForm
+              onSignInSubmit={this.handleSubmitSignIn}
+              isSigningIn={this.props.isSigningIn} />
           </Content>
         </Container>
       </DrawerContainer>
@@ -77,7 +84,9 @@ class SignIn extends Component {
 }
 
 function mapStateToProps(state) {
-  return {};
+  return {
+    isSigningIn: state.user.get('status') === SIGNING_IN_STATUS || state.user.get('status') === VALID_USER_STATUS || state.user.get('status') === FETCHING_USER_DATA_STATUS
+  };
 }
 
 export const SignInContainer = connect(mapStateToProps)(SignIn);

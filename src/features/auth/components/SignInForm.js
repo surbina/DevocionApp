@@ -5,7 +5,8 @@ import {
 import {
   Input,
   InputGroup,
-  Button
+  Button,
+  Spinner
 } from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
 
@@ -47,6 +48,7 @@ class SignInForm extends Component {
         <InputGroup>
           <Input
             onChangeText={(email) => this.setState({email})}
+            keyboardType='email-address'
             placeholder='Email' />
         </InputGroup>
         <InputGroup>
@@ -55,11 +57,13 @@ class SignInForm extends Component {
             placeholder='Contraseña'
             secureTextEntry={true} />
         </InputGroup>
-        <Button
-          style={authFormStyle.button}
-          onPress={this.handleFormSubmit}>
-          Ingresar
-        </Button>
+         {this.props.isSigningIn ?
+          <Spinner color='blue' /> :
+          <Button
+            style={authFormStyle.button}
+            onPress={this.handleFormSubmit}>
+            Ingresar
+          </Button>}
       </View>
     );
   }

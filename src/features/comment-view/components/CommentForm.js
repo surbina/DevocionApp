@@ -8,7 +8,8 @@ import {
   Input,
   InputGroup,
   Button,
-  Text
+  Text,
+  Spinner
 } from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
 import {
@@ -46,6 +47,10 @@ class CommentForm extends Component {
       comment_body: comment_body,
       creation_date: moment().format()
     });
+
+    this.setState({
+      comment_body: ''
+    });
   }
 
   _handleNavigateSignIn() {
@@ -62,15 +67,18 @@ class CommentForm extends Component {
         <View style={styles.container}>
           <InputGroup>
             <Input
+              value={this.state.comment_body}
               onChangeText={(comment_body) => this.setState({comment_body})}
               placeholder='Comentario' />
           </InputGroup>
           <View style={styles.buttonContainer}>
-            <Button
-              style={styles.button}
-              onPress={this.handleFormSubmit}>
-              Comentar
-            </Button>
+            {this.props.isSubmitingComment ?
+              <Spinner color='blue' /> :
+              <Button
+                style={styles.button}
+                onPress={this.handleFormSubmit}>
+                Comentar
+              </Button>}
           </View>
         </View> :
         <View style={styles.container}>

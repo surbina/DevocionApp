@@ -17,6 +17,7 @@ import {
   SIGN_UP_ROUTE_INDEX
 } from '../../../Navigation.js';
 
+import { SUBMITTING_STATUS } from '../../../reducers/comment_list/reducer.js';
 import contentStyle from '../../../styles/content.js';
 import CommentForm from '../components/CommentForm.js';
 import CommentList from '../components/CommentList.js';
@@ -89,7 +90,8 @@ class CommentView extends Component {
             user={this.props.user}
             onCommentSubmit={this.handleCommentSubmit}
             onNavigateSignIn={this.handleNavigateSignIn}
-            onNavigateSignUp={this.handleNavigateSignUp} />
+            onNavigateSignUp={this.handleNavigateSignUp}
+            isSubmitingComment={this.props.isSubmitingComment} />
           {this.getComments().size > 0 ?
               <CommentList comments={this.getComments()} />:
               <Text>Todavía no han comentado este devocional.</Text>}
@@ -104,7 +106,8 @@ function mapStateToProps(state) {
   return {
     user: state.user,
     devotionalId: devotionalId,
-    comments: state.comment_list.get(devotionalId)
+    comments: state.comment_list.get(devotionalId),
+    isSubmitingComment: state.comment_list.get('status') === SUBMITTING_STATUS
   };
 }
 
