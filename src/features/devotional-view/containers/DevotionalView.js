@@ -15,6 +15,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 
 import { DrawerContainer } from '../../../components/drawer/Drawer.js';
 import DevotionalContent from '../components/DevotionalContent.js';
+import DevotionalFooter from '../components/DevotionalFooter.js';
 import contentStyle from '../../../styles/content.js';
 
 import {
@@ -96,13 +97,16 @@ class DevotionalView extends Component {
             ref={c => this._content = c}>
             {this.props.loadingDevotional ?
               <Spinner color='blue' /> :
-              <DevotionalContent
-                devotional={this.props.devotional}
-                onPreviousAction={this.onPreviousDevotional}
-                onNextAction={this.onNextDevotional}
-                onViewCommentsAction={this.onViewComments} />}
+              <DevotionalContent devotional={this.props.devotional} />}
           </Content>
         </Container>
+        {this.props.loadingDevotional ?
+          false :
+          <DevotionalFooter
+            devotional={this.props.devotional}
+            onPreviousAction={this.onPreviousDevotional}
+            onNextAction={this.onNextDevotional}
+            onViewCommentsAction={this.onViewComments} />}
       </DrawerContainer>
     );
   }
