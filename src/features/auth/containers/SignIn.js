@@ -9,6 +9,7 @@ import {
   Icon
 } from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
+import dismissKeyboard from 'dismissKeyboard';
 
 import { DrawerContainer } from '../../../components/drawer/Drawer.js';
 import SignInForm from '../components/SignInForm.js';
@@ -39,6 +40,7 @@ class SignIn extends Component {
   }
 
   _handleOpenDrawer() {
+    dismissKeyboard();
     this.drawer.getWrappedInstance().openDrawer();
   }
 
@@ -72,7 +74,8 @@ class SignIn extends Component {
           </Header>
           <Content
             style={contentStyle}
-            contentContainerStyle={contentContainerStyle}>
+            contentContainerStyle={contentContainerStyle}
+            keyboardShouldPersistTaps={true}>
             <SignInForm
               onSignInSubmit={this.handleSubmitSignIn}
               isSigningIn={this.props.isSigningIn} />

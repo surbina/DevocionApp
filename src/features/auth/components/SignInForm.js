@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
-  View
+  View,
+  StyleSheet
 } from 'react-native';
 import {
   Input,
@@ -9,7 +10,9 @@ import {
   Spinner
 } from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
+import dismissKeyboard from 'dismissKeyboard';
 
+import ErrorMessage from '../../../components/ErrorMessage.js';
 import authFormStyle from '../../../styles/authForm.js';
 
 class SignInForm extends Component {
@@ -18,10 +21,16 @@ class SignInForm extends Component {
 
     this.state ={
       email: '',
-      password: ''
+      emailValid: false,
+      emailValidationMessage: '',
+      password: '',
+      passwordValid: false,
+      passwordValidationMessage: ''
     };
 
     this.handleFormSubmit = this._handleFormSubmit.bind(this);
+    this.validateEmail = this._validateEmail.bind(this);
+    this.validatePassword = this._validatePassword.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -29,11 +38,12 @@ class SignInForm extends Component {
   }
 
   _handleFormSubmit() {
+    dismissKeyboard();
     const email = this.state.email.trim();
     const password = this.state.password;
 
-    if(!email || !password) {
-      return;
+    if(!this.validateEmail() | !this.validatePassword()) {
+      return
     }
 
     this.props.onSignInSubmit({
@@ -42,21 +52,64 @@ class SignInForm extends Component {
     });
   }
 
+  _validateEmail() {
+    const regex = /(?!.*\.\.)("[!-~ ]+"|[0-9A-Z!#-'*-\/=?^-~]+)@((?![-])[A-Za-z0-9-]*[A-Za-z-]+[A-Za-z0-9-]*(?![-])\.*)+\.[a-z]+/g;
+    const isValid = regex.test(this.state.email);
+    const validationMessage = !isValid ? 'Por favor introduce una dirección de email con el siguiente formato: usuario@proveedor.com' : '';
+
+    this.setState({
+      emailValid: isValid,
+      emailValidationMessage: validationMessage
+    });
+
+    return isValid;
+  }
+
+  _validatePassword() {
+    const isValid = this.state.password.length > 0;
+    const validationMessage = !isValid ? 'Por favor introduce una contraseña' : '';
+
+    this.setState({
+      passwordValid: isValid,
+      passwordValidationMessage: validationMessage
+    });
+
+    return isValid;
+  }
+
   render() {
+    let showEmailError = !this.state.emailValid && !!this.state.emailValidationMessage;
+    const emailInputGroupProps = {
+      error: showEmailError
+    };
+
+    let showPasswordError = !this.state.passwordValid && !!this.state.passwordValidationMessage;
+    const passwordInputGroupProps = {
+      error: showPasswordError
+    };
+
     return (
       <View style={authFormStyle.form}>
-        <InputGroup>
+        <InputGroup {...emailInputGroupProps}>
           <Input
+            style={showEmailError && styles.error}
             onChangeText={(email) => this.setState({email})}
             keyboardType='email-address'
             placeholder='Email' />
         </InputGroup>
-        <InputGroup>
+        <ErrorMessage showMessage={showEmailError}>
+          {this.state.emailValidationMessage}
+        </ErrorMessage>
+        <InputGroup {...passwordInputGroupProps}>
           <Input
+            style={showPasswordError && styles.error}
             onChangeText={(password) => this.setState({password})}
             placeholder='Contraseña'
             secureTextEntry={true} />
         </InputGroup>
+        <ErrorMessage showMessage={showPasswordError}>
+          {this.state.passwordValidationMessage}
+        </ErrorMessage>
          {this.props.isSigningIn ?
           <Spinner color='blue' /> :
           <Button
@@ -68,5 +121,11 @@ class SignInForm extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  error: {
+    color: 'red'
+  }
+});
 
 export default SignInForm;
