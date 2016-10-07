@@ -11,6 +11,7 @@ import {
   Icon
 } from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
+import dismissKeyboard from 'dismissKeyboard';
 
 import {
   SIGN_IN_ROUTE_INDEX,
@@ -71,6 +72,7 @@ class CommentView extends Component {
   }
 
   _handleBackAction() {
+    dismissKeyboard();
     this.props.navigator.pop();
   }
 
@@ -85,7 +87,9 @@ class CommentView extends Component {
           </Button>
           <Title>Comentarios</Title>
         </Header>
-        <Content style={contentStyle}>
+        <Content
+          style={contentStyle}
+          keyboardShouldPersistTaps={true}>
           <CommentForm
             user={this.props.user}
             onCommentSubmit={this.handleCommentSubmit}

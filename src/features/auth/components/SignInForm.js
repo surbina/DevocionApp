@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
-  View,
-  StyleSheet
+  View
 } from 'react-native';
 import {
   Input,
@@ -14,6 +13,7 @@ import dismissKeyboard from 'dismissKeyboard';
 
 import ErrorMessage from '../../../components/ErrorMessage.js';
 import authFormStyle from '../../../styles/authForm.js';
+import textErrorStyle from '../../../styles/textError.js';
 
 class SignInForm extends Component {
   constructor(props) {
@@ -92,7 +92,7 @@ class SignInForm extends Component {
       <View style={authFormStyle.form}>
         <InputGroup {...emailInputGroupProps}>
           <Input
-            style={showEmailError && styles.error}
+            style={showEmailError && textErrorStyle}
             onChangeText={(email) => this.setState({email})}
             keyboardType='email-address'
             placeholder='Email' />
@@ -102,7 +102,7 @@ class SignInForm extends Component {
         </ErrorMessage>
         <InputGroup {...passwordInputGroupProps}>
           <Input
-            style={showPasswordError && styles.error}
+            style={showPasswordError && textErrorStyle}
             onChangeText={(password) => this.setState({password})}
             placeholder='Contraseña'
             secureTextEntry={true} />
@@ -121,11 +121,5 @@ class SignInForm extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  error: {
-    color: 'red'
-  }
-});
 
 export default SignInForm;

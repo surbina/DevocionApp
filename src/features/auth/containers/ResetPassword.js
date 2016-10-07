@@ -9,6 +9,7 @@ import {
   Icon
 } from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
+import dismissKeyboard from 'dismissKeyboard';
 
 import { DrawerContainer } from '../../../components/drawer/Drawer.js';
 import ResetPasswordForm from '../components/ResetPasswordForm.js';
@@ -32,6 +33,7 @@ class ResetPassword extends Component {
   }
 
   _handleOpenDrawer() {
+    dismissKeyboard();
     this.drawer.getWrappedInstance().openDrawer();
   }
 
@@ -58,7 +60,8 @@ class ResetPassword extends Component {
           </Header>
           <Content
             style={contentStyle}
-            contentContainerStyle={contentContainerStyle}>
+            contentContainerStyle={contentContainerStyle}
+            keyboardShouldPersistTaps={true}>
             <ResetPasswordForm
               onResetPasswordSubmit={this.handleResetPasswordSubmit}
               isSendingResetPasswordMail={this.props.isSendingResetPasswordMail} />

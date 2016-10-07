@@ -9,6 +9,7 @@ import {
   Icon
 } from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
+import dismissKeyboard from 'dismissKeyboard';
 
 import {
   CREATING_USER_STATUS,
@@ -39,6 +40,7 @@ class SignUp extends Component {
   }
 
   _handleOpenDrawer() {
+    dismissKeyboard();
     this.drawer.getWrappedInstance().openDrawer();
   }
 
@@ -72,7 +74,8 @@ class SignUp extends Component {
           </Header>
           <Content
             style={contentStyle}
-            contentContainerStyle={contentContainerStyle}>
+            contentContainerStyle={contentContainerStyle}
+            keyboardShouldPersistTaps={true}>
             <SignUpForm
               onSignUpSubmit={this.handleSubmitSignUp}
               isSigningUp={this.props.isSigningUp} />
