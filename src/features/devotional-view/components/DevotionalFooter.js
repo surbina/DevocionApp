@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 import shallowCompare from 'react-addons-shallow-compare';
 import moment from 'moment';
 import {
-  View,
+  Animated,
   StyleSheet
 } from 'react-native';
-import {
-  Button
-} from 'native-base';
+
+import FooterButton from './FooterButton.js';
+
+export const BUTTOM_HEIGHT = 50;
+export const PADDING = 5;
+export const PADDING_TOP_BOTTOM = 10;
+export const BORDER_TOP_WIDTH = 1;
+export const FOOTER_HEIGHT = BUTTOM_HEIGHT + 2 * PADDING_TOP_BOTTOM + BORDER_TOP_WIDTH;
 
 class DevotionalFooter extends Component {
   constructor(props) {
@@ -37,35 +42,49 @@ class DevotionalFooter extends Component {
   }
 
   render() {
+    const bottom = this.props.scrollYOffset.interpolate({
+      inputRange: [0, FOOTER_HEIGHT],
+      outputRange: [0, -FOOTER_HEIGHT],
+      extrapolate: 'clamp',
+    });
+
     return(
-      <View style={styles.container}>
-        <Button onPress={this.handlePreviousAction}>
+      <Animated.View style={[styles.container, {bottom: bottom}]}>
+        <FooterButton
+          iconName='md-arrow-back'
+          onPress={this.handlePreviousAction}>
           Anterior
-        </Button>
-        <Button onPress={this.handleViewCommentsAction}>
-          Ver Comentarios
-        </Button>
-        <Button onPress={this.handleNextAction}>
+        </FooterButton>
+
+        <FooterButton
+          iconName='md-chatbubbles'
+          onPress={this.handleViewCommentsAction}>
+          Comentarios
+        </FooterButton>
+
+        <FooterButton
+          iconName='md-arrow-forward'
+          onPress={this.handleNextAction}>
           Siguiente
-        </Button>
-      </View>
+        </FooterButton>
+      </Animated.View>
     );
   }
 }
 
-const buttonHeight = 38;
-const padding = 5;
-
 const styles = StyleSheet.create({
   container: {
-    height: buttonHeight + 2 * padding,
-    padding: padding,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    padding: PADDING,
+    paddingTop: PADDING_TOP_BOTTOM,
+    paddingBottom: PADDING_TOP_BOTTOM,
+    borderTopWidth: BORDER_TOP_WIDTH,
+    borderTopColor: '#DDD',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: 'white',
-
-    borderTopWidth: 1,
-    borderTopColor: '#DDD'
+    backgroundColor: 'white'
   }
 });
 

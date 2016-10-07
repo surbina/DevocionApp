@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import {
+  Animated
+} from 'react-native';
+import {
   Container,
   Header,
   Title,
@@ -10,7 +13,6 @@ import {
   Button,
   Icon
 } from 'native-base';
-import _ from 'lodash';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import { DrawerContainer } from '../../../components/drawer/Drawer.js';
@@ -42,6 +44,17 @@ class DevotionalView extends Component {
     this.onDevotionalNotFound = this._onDevotionalNotFound.bind(this);
 
     this.handleOpenDrawer = this._handleOpenDrawer.bind(this);
+
+    this.state = {
+      scrollY: new Animated.Value(0),
+    };
+    this.handleScroll = Animated.event([{
+      nativeEvent: {
+        contentOffset: {
+          y: this.state.scrollY
+        }
+      }
+    }]);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -81,8 +94,8 @@ class DevotionalView extends Component {
   render() {
     return (
       <DrawerContainer
-        navigator={this.props.navigator}
-        ref={d => this.drawer = d}>
+        ref={d => this.drawer = d}
+        navigator={this.props.navigator}>
         <Container> 
           <Header>
             <Button
@@ -93,11 +106,14 @@ class DevotionalView extends Component {
             <Title>Devocional</Title>
           </Header>
           <Content
+            ref={c => this._content = c}
             style={contentStyle}
-            ref={c => this._content = c}>
+            onScroll={this.handleScroll}>
             {this.props.loadingDevotional ?
               <Spinner color='blue' /> :
-              <DevotionalContent devotional={this.props.devotional} />}
+              <DevotionalContent
+                devotional={this.props.devotional}
+                scrollYOffset={this.state.scrollY} />}
           </Content>
         </Container>
         {this.props.loadingDevotional ?
@@ -106,7 +122,8 @@ class DevotionalView extends Component {
             devotional={this.props.devotional}
             onPreviousAction={this.onPreviousDevotional}
             onNextAction={this.onNextDevotional}
-            onViewCommentsAction={this.onViewComments} />}
+            onViewCommentsAction={this.onViewComments}
+            scrollYOffset={this.state.scrollY} />}
       </DrawerContainer>
     );
   }

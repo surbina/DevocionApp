@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import {
+  Animated,
   View,
   StyleSheet
 } from 'react-native';
 import {
   Text,
-  Spinner,
-  Button
+  Spinner
 } from 'native-base';
-
 import shallowCompare from 'react-addons-shallow-compare';
+
+import {
+  FOOTER_HEIGHT
+} from './DevotionalFooter.js';
 
 class DevotionalContent extends Component {
   constructor(props) {
@@ -22,9 +25,15 @@ class DevotionalContent extends Component {
   }
 
   render() {
+    const marginBottom = this.props.scrollYOffset.interpolate({
+      inputRange: [0, FOOTER_HEIGHT],
+      outputRange: [FOOTER_HEIGHT, 0],
+      extrapolate: 'clamp',
+    });
+
     return (
       !!this.props.devotional ?
-        <View>
+        <Animated.View style={{marginBottom: marginBottom}}>
           <View style={[styles.centerContent, styles.row]}>
             <Text style={styles.textTitle}>{this.props.devotional.get('title')}</Text>
           </View>
@@ -37,7 +46,7 @@ class DevotionalContent extends Component {
           <View style={styles.row}>
             <Text>{this.props.devotional.get('body')}</Text>
           </View>
-        </View> :
+        </Animated.View> :
         <Spinner color='blue' />
     );
   }
