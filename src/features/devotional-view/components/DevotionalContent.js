@@ -10,6 +10,7 @@ import {
   Spinner
 } from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
+import HTMLView from 'react-native-htmlview';
 
 import {
   FOOTER_HEIGHT
@@ -44,7 +45,10 @@ class DevotionalContent extends Component {
             <Text>{this.props.devotional.get('passage')} - {moment(this.props.devotional.get('publish_date')).format('LL')}</Text>
           </View>
           <View style={styles.row}>
-            <Text>{this.props.devotional.get('body')}</Text>
+            <Text>
+              <HTMLView
+                value={this.props.devotional.get('body')} />
+            </Text>
           </View>
         </Animated.View> :
         <Spinner color='blue' />
