@@ -96,7 +96,7 @@ class DevotionalView extends Component {
       <DrawerContainer
         ref={d => this.drawer = d}
         navigator={this.props.navigator}>
-        <Container> 
+        <Container>
           <Header>
             <Button
               transparent

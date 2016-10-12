@@ -8,7 +8,7 @@ import {
   BackAndroid
 } from 'react-native';
 
-import CalendarView from './features/calendar-view/containers/CalendarView.js';
+import CalendarView from './features/calendar-view/components/CalendarView.js';
 import DevotionalNotFoundView from './features/devotional-not-found-view/containers/DevotionalNotFoundView.js';
 import { DevotionalViewContainer } from './features/devotional-view/containers/DevotionalView.js';
 import { CommentViewContainer } from './features/comment-view/containers/CommentView.js';
