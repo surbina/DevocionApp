@@ -167,6 +167,7 @@ class SignUpForm extends Component {
         <InputGroup {...firstNameInputGroupProps}>
           <Input
             style={showFirstNameError && textErrorStyle}
+            value={this.state.firstName}
             onChangeText={(firstName) => this.setState({firstName})}
             placeholder='Nombre' />
         </InputGroup>
@@ -176,6 +177,7 @@ class SignUpForm extends Component {
         <InputGroup {...lastNameInputGroupProps}>
           <Input
             style={showLastNameError && textErrorStyle}
+            value={this.state.lastName}
             onChangeText={(lastName) => this.setState({lastName})}
             placeholder='Apellido' />
         </InputGroup>
@@ -185,6 +187,7 @@ class SignUpForm extends Component {
         <InputGroup {...emailInputGroupProps}>
           <Input
             style={showEmailError && textErrorStyle}
+            value={this.state.email}
             onChangeText={(email) => this.setState({email})}
             keyboardType='email-address'
             placeholder='Email' />
@@ -195,6 +198,7 @@ class SignUpForm extends Component {
         <InputGroup {...passwordInputGroupProps}>
           <Input
             style={showPasswordError && textErrorStyle}
+            value={this.state.password}
             onChangeText={(password) => this.setState({password})}
             placeholder='Contraseña'
             secureTextEntry={true} />
@@ -205,6 +209,7 @@ class SignUpForm extends Component {
         <InputGroup {...confirmPasswordInputGroupProps}>
           <Input
             style={showConfirmPasswordError && textErrorStyle}
+            value={this.state.confirmPassword}
             onChangeText={(confirmPassword) => this.setState({confirmPassword})}
             placeholder='Confirmar Contraseña'
             secureTextEntry={true} />

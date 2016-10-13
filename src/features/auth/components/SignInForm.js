@@ -43,7 +43,7 @@ class SignInForm extends Component {
     const password = this.state.password;
 
     if(!this.validateEmail() | !this.validatePassword()) {
-      return
+      return;
     }
 
     this.props.onSignInSubmit({
@@ -93,6 +93,7 @@ class SignInForm extends Component {
         <InputGroup {...emailInputGroupProps}>
           <Input
             style={showEmailError && textErrorStyle}
+            value={this.state.email}
             onChangeText={(email) => this.setState({email})}
             keyboardType='email-address'
             placeholder='Email' />
@@ -103,6 +104,7 @@ class SignInForm extends Component {
         <InputGroup {...passwordInputGroupProps}>
           <Input
             style={showPasswordError && textErrorStyle}
+            value={this.state.password}
             onChangeText={(password) => this.setState({password})}
             placeholder='Contraseña'
             secureTextEntry={true} />

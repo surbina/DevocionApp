@@ -68,6 +68,7 @@ class ResetPasswordForm extends Component {
         <InputGroup {...emailInputGroupProps}>
           <Input
             style={showEmailError && textErrorStyle}
+            value={this.state.email}
             onChangeText={(email) => this.setState({email})}
             keyboardType='email-address'
             placeholder='Email' />

@@ -38,7 +38,8 @@ class DrawerMenu extends Component {
         {
           title: 'Devocionales',
           action: this._handleNavigateToRoute.bind(this, DEVOTIONAL_VIEW_ROUTE_INDEX, {}),
-          icon: 'newspaper-o'
+          icon: 'newspaper-o',
+          style: {borderBottomWidth: 1}
         }
       ],
       itemsAnonymousUser: [
