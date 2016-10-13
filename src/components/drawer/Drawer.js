@@ -39,6 +39,7 @@ class Drawer extends Component {
   }
 
   _dispatchAction(action) {
+    this.closeDrawer();
     this.props.dispatch(action());
   }
 
