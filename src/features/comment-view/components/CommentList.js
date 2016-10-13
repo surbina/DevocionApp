@@ -15,7 +15,7 @@ class CommentList extends Component {
   render() {
     return(
       <View>
-        {this.props.comments.valueSeq().map(comment => 
+        {this.props.comments.map(comment => 
           <CommentItem
             key={comment.get('id')}
             comment={comment} />

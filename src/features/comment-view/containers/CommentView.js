@@ -76,6 +76,10 @@ class CommentView extends Component {
     this.props.navigator.pop();
   }
 
+  _commentComparator(comA, comB) {
+    return -1 * comA.get('creation_date').localeCompare(comB.get('creation_date'));
+  }
+
   render() {
     return (
       <Container>
@@ -97,7 +101,7 @@ class CommentView extends Component {
             onNavigateSignUp={this.handleNavigateSignUp}
             isSubmitingComment={this.props.isSubmitingComment} />
           {this.getComments().size > 0 ?
-              <CommentList comments={this.getComments()} />:
+              <CommentList comments={this.getComments().toArray().sort(this._commentComparator)} />:
               <Text>Todavía no han comentado este devocional.</Text>}
         </Content>
       </Container>
