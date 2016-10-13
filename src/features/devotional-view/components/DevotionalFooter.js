@@ -21,6 +21,7 @@ class DevotionalFooter extends Component {
     this.handlePreviousAction = this._handlePreviousAction.bind(this);
     this.handleNextAction = this._handleNextAction.bind(this);
     this.handleViewCommentsAction = this._handleViewCommentsAction.bind(this);
+    this.handleShowCalendar = this._handleShowCalendar.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -39,6 +40,10 @@ class DevotionalFooter extends Component {
 
   _handleViewCommentsAction() {
     this.props.onViewCommentsAction();
+  }
+
+  _handleShowCalendar() {
+    this.props.onShowCalendar();
   }
 
   render() {
@@ -60,6 +65,12 @@ class DevotionalFooter extends Component {
           iconName='md-chatbubbles'
           onPress={this.handleViewCommentsAction}>
           Comentarios
+        </FooterButton>
+
+        <FooterButton
+          iconName='md-calendar'
+          onPress={this.handleShowCalendar}>
+          Calendario
         </FooterButton>
 
         <FooterButton

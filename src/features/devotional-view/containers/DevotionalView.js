@@ -13,6 +13,7 @@ import {
   Button,
   Icon
 } from 'native-base';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 import shallowCompare from 'react-addons-shallow-compare';
 
 import { DrawerContainer } from '../../../components/drawer/Drawer.js';
@@ -42,11 +43,16 @@ class DevotionalView extends Component {
     this.onNextDevotional = this._onNextDevotional.bind(this);
     this.onViewComments = this._onViewComments.bind(this);
     this.onDevotionalNotFound = this._onDevotionalNotFound.bind(this);
+    this.onConfirmDatePicked = this._onConfirmDatePicked.bind(this);
+    this.onCancelDatePicked = this._onCancelDatePicked.bind(this);
 
     this.handleOpenDrawer = this._handleOpenDrawer.bind(this);
+    this.handleShowDatePicker = this._handleShowDatePicker.bind(this);
+    this.handleHideDatePicker = this._handleHideDatePicker.bind(this);
 
     this.state = {
       scrollY: new Animated.Value(0),
+      isDatePickerVisible: false
     };
     this.handleScroll = Animated.event([{
       nativeEvent: {
@@ -91,6 +97,27 @@ class DevotionalView extends Component {
     this.drawer.getWrappedInstance().openDrawer();
   }
 
+  _handleShowDatePicker() {
+    this.setState({
+      isDatePickerVisible: true
+    });
+  }
+
+  _handleHideDatePicker() {
+    this.setState({
+      isDatePickerVisible: false
+    });
+  }
+
+  _onConfirmDatePicked(date) {
+    this.handleHideDatePicker();
+    this.onPreviousDevotional(moment(date).format('YYYY-MM-DD'));
+  }
+
+  _onCancelDatePicked() {
+    this.handleHideDatePicker();
+  }
+
   render() {
     return (
       <DrawerContainer
@@ -114,6 +141,11 @@ class DevotionalView extends Component {
               <DevotionalContent
                 devotional={this.props.devotional}
                 scrollYOffset={this.state.scrollY} />}
+            <DateTimePicker
+                isVisible={this.state.isDatePickerVisible}
+                onConfirm={this.onConfirmDatePicked}
+                onCancel={this.onCancelDatePicked}
+              />
           </Content>
         </Container>
         {this.props.loadingDevotional ?
@@ -123,6 +155,7 @@ class DevotionalView extends Component {
             onPreviousAction={this.onPreviousDevotional}
             onNextAction={this.onNextDevotional}
             onViewCommentsAction={this.onViewComments}
+            onShowCalendar={this.handleShowDatePicker}
             scrollYOffset={this.state.scrollY} />}
       </DrawerContainer>
     );
