@@ -8,7 +8,6 @@ import {
   BackAndroid
 } from 'react-native';
 
-import CalendarView from './features/calendar-view/components/CalendarView.js';
 import DevotionalNotFoundView from './features/devotional-not-found-view/containers/DevotionalNotFoundView.js';
 import { DevotionalViewContainer } from './features/devotional-view/containers/DevotionalView.js';
 import { CommentViewContainer } from './features/comment-view/containers/CommentView.js';
@@ -20,7 +19,6 @@ import { SplashScreenViewContainer } from './features/splash-screen-view/contain
 export const SPLASH_SCREEN_VIEW_ROUTE_INDEX = 'SPLASH_SCREEN_VIEW';
 export const DEVOTIONAL_VIEW_ROUTE_INDEX = 'DEVOTIONAL_VIEW';
 export const COMMENT_VIEW_ROUTE_INDEX = 'COMMENT_VIEW';
-export const CALENDAR_VIEW_ROUTE_INDEX = 'CALENDAR_VIEW';
 export const DEVOTIONAL_NOT_FOUND_VIEW_ROUTE_INDEX = 'DEVOTIONAL_NOT_FOUND_VIEW';
 export const SIGN_IN_ROUTE_INDEX = 'SIGN_IN';
 export const SIGN_UP_ROUTE_INDEX = 'SIGN_UP';
@@ -45,8 +43,6 @@ class Navigation extends Component {
     switch(route.index) {
       case SPLASH_SCREEN_VIEW_ROUTE_INDEX:
         return <SplashScreenViewContainer navigator={navigator} />;
-      case CALENDAR_VIEW_ROUTE_INDEX:
-        return <CalendarView navigator={navigator} />;
       case DEVOTIONAL_NOT_FOUND_VIEW_ROUTE_INDEX:
         return <DevotionalNotFoundView navigator={navigator} />;
       case COMMENT_VIEW_ROUTE_INDEX:

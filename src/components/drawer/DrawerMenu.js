@@ -17,7 +17,6 @@ import shallowCompare from 'react-addons-shallow-compare';
 
 import {
   DEVOTIONAL_VIEW_ROUTE_INDEX,
-  CALENDAR_VIEW_ROUTE_INDEX,
   SIGN_IN_ROUTE_INDEX,
   SIGN_UP_ROUTE_INDEX,
   RESET_PASSWORD_ROUTE_INDEX
@@ -40,12 +39,6 @@ class DrawerMenu extends Component {
           title: 'Devocionales',
           action: this._handleNavigateToRoute.bind(this, DEVOTIONAL_VIEW_ROUTE_INDEX, {}),
           icon: 'newspaper-o'
-        },
-        {
-          title: 'Calendario',
-          action: this._handleNavigateToRoute.bind(this, CALENDAR_VIEW_ROUTE_INDEX),
-          icon: 'calendar',
-          style: {borderBottomWidth: 1}
         }
       ],
       itemsAnonymousUser: [
