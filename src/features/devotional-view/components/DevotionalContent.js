@@ -47,7 +47,7 @@ class DevotionalContent extends Component {
           <View style={styles.row}>
             <Text>
               <HTMLView
-                value={this.props.devotional.get('body')} />
+                value={this.props.devotional.get('body').replace(/\n/g, '')} />
             </Text>
           </View>
         </Animated.View> :
