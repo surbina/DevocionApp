@@ -16,7 +16,8 @@ import {
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import shallowCompare from 'react-addons-shallow-compare';
 
-import { DrawerContainer } from '../../../components/drawer/Drawer.js';
+import Toolbar from '../../../components/Toolbar.js';
+import AppContainer from '../../../components/AppContainer.js';
 import DevotionalContent from '../components/DevotionalContent.js';
 import DevotionalFooter from '../components/DevotionalFooter.js';
 import contentStyle from '../../../styles/content.js';
@@ -31,9 +32,20 @@ import {
 } from '../../../reducers/devotional_view_section/reducer.js';
 
 import {
+  signOutAction
+} from '../../../reducers/user/actions.js';
+
+import {
+  SIGNED_USER_STATUS
+} from '../../../reducers/user/reducer.js';
+
+import {
   COMMENT_VIEW_ROUTE_INDEX,
-  DEVOTIONAL_NOT_FOUND_VIEW_ROUTE_INDEX
-} from '../../../Navigation.js';;
+  DEVOTIONAL_NOT_FOUND_VIEW_ROUTE_INDEX,
+  SIGN_IN_ROUTE_INDEX,
+  SIGN_UP_ROUTE_INDEX,
+  RESET_PASSWORD_ROUTE_INDEX
+} from '../../../Navigation.js';
 
 class DevotionalView extends Component {
   constructor(props) {
@@ -46,7 +58,6 @@ class DevotionalView extends Component {
     this.onConfirmDatePicked = this._onConfirmDatePicked.bind(this);
     this.onCancelDatePicked = this._onCancelDatePicked.bind(this);
 
-    this.handleOpenDrawer = this._handleOpenDrawer.bind(this);
     this.handleShowDatePicker = this._handleShowDatePicker.bind(this);
     this.handleHideDatePicker = this._handleHideDatePicker.bind(this);
 
@@ -61,6 +72,22 @@ class DevotionalView extends Component {
         }
       }
     }]);
+
+    this.anonymousUserActions = [{
+      title: 'Ingresar',
+      action: this._handleNavigateToRoute.bind(this, SIGN_IN_ROUTE_INDEX)
+    }, {
+      title: 'Registrarse',
+      action: this._handleNavigateToRoute.bind(this, SIGN_UP_ROUTE_INDEX)
+    }, {
+      title: 'Reiniciar contraseña',
+      action: this._handleNavigateToRoute.bind(this, RESET_PASSWORD_ROUTE_INDEX)
+    }];
+
+    this.signedInUserActions = [{
+      title: 'Salir',
+      action: this._handleDispatchAction.bind(this, signOutAction),
+    }]
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -93,10 +120,6 @@ class DevotionalView extends Component {
     this.props.navigator.replaceAtIndex({index: DEVOTIONAL_NOT_FOUND_VIEW_ROUTE_INDEX}, 0);
   }
 
-  _handleOpenDrawer() {
-    this.drawer.getWrappedInstance().openDrawer();
-  }
-
   _handleShowDatePicker() {
     this.setState({
       isDatePickerVisible: true
@@ -118,20 +141,30 @@ class DevotionalView extends Component {
     this.handleHideDatePicker();
   }
 
+  _handleNavigateToRoute(index, params) {
+    this.props.navigator.replaceAtIndex({ index, params }, 0);
+  }
+
+  _handleDispatchAction(action) {
+    this.props.dispatch(action());
+  }
+
   render() {
+    let userName = '',
+      actions = this.anonymousUserActions;
+
+    if(this.props.user.get('status') === SIGNED_USER_STATUS) {
+      userName = this.props.user.get('user_first_name');
+      actions = this.signedInUserActions;
+    }
+
     return (
-      <DrawerContainer
-        ref={d => this.drawer = d}
-        navigator={this.props.navigator}>
+      <AppContainer>
+        <Toolbar
+          title='DevocionApp'
+          subtitle={userName}
+          actions={actions} />
         <Container>
-          <Header>
-            <Button
-              transparent
-              onPress={this.handleOpenDrawer}>
-              <Icon name='ios-menu' />
-            </Button>
-            <Title>Devocional</Title>
-          </Header>
           <Content
             ref={c => this._content = c}
             style={contentStyle}
@@ -157,7 +190,7 @@ class DevotionalView extends Component {
             onViewCommentsAction={this.onViewComments}
             onShowCalendar={this.handleShowDatePicker}
             scrollYOffset={this.state.scrollY} />}
-      </DrawerContainer>
+      </AppContainer>
     );
   }
 }
@@ -166,7 +199,8 @@ function mapStateToProps(state) {
   const currentDevotionalPublishDate = state.devotional_view_section.get('current_devotional_publish_date');
   return {
     devotional: state.devotional_list.get(currentDevotionalPublishDate),
-    loadingDevotional: state.devotional_view_section.get('status') === LOADING_DEVOTIONAL_STATUS
+    loadingDevotional: state.devotional_view_section.get('status') === LOADING_DEVOTIONAL_STATUS,
+    user: state.user
   };
 }
 
