@@ -16,7 +16,6 @@ import {
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import shallowCompare from 'react-addons-shallow-compare';
 
-import Toolbar from '../../../components/Toolbar.js';
 import AppContainer from '../../../components/AppContainer.js';
 import DevotionalContent from '../components/DevotionalContent.js';
 import DevotionalFooter from '../components/DevotionalFooter.js';
@@ -32,19 +31,8 @@ import {
 } from '../../../reducers/devotional_view_section/reducer.js';
 
 import {
-  signOutAction
-} from '../../../reducers/user/actions.js';
-
-import {
-  SIGNED_USER_STATUS
-} from '../../../reducers/user/reducer.js';
-
-import {
   COMMENT_VIEW_ROUTE_INDEX,
-  DEVOTIONAL_NOT_FOUND_VIEW_ROUTE_INDEX,
-  SIGN_IN_ROUTE_INDEX,
-  SIGN_UP_ROUTE_INDEX,
-  RESET_PASSWORD_ROUTE_INDEX
+  DEVOTIONAL_NOT_FOUND_VIEW_ROUTE_INDEX
 } from '../../../Navigation.js';
 
 class DevotionalView extends Component {
@@ -72,22 +60,6 @@ class DevotionalView extends Component {
         }
       }
     }]);
-
-    this.anonymousUserActions = [{
-      title: 'Ingresar',
-      action: this._handleNavigateToRoute.bind(this, SIGN_IN_ROUTE_INDEX)
-    }, {
-      title: 'Registrarse',
-      action: this._handleNavigateToRoute.bind(this, SIGN_UP_ROUTE_INDEX)
-    }, {
-      title: 'Reiniciar contraseña',
-      action: this._handleNavigateToRoute.bind(this, RESET_PASSWORD_ROUTE_INDEX)
-    }];
-
-    this.signedInUserActions = [{
-      title: 'Salir',
-      action: this._handleDispatchAction.bind(this, signOutAction),
-    }]
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -141,29 +113,11 @@ class DevotionalView extends Component {
     this.handleHideDatePicker();
   }
 
-  _handleNavigateToRoute(index, params) {
-    this.props.navigator.replaceAtIndex({ index, params }, 0);
-  }
-
-  _handleDispatchAction(action) {
-    this.props.dispatch(action());
-  }
-
   render() {
-    let userName = '',
-      actions = this.anonymousUserActions;
-
-    if(this.props.user.get('status') === SIGNED_USER_STATUS) {
-      userName = this.props.user.get('user_first_name');
-      actions = this.signedInUserActions;
-    }
-
     return (
-      <AppContainer>
-        <Toolbar
-          title='DevocionApp'
-          subtitle={userName}
-          actions={actions} />
+      <AppContainer
+        title='DevocionApp'
+        navigator={this.props.navigator}>
         <Container>
           <Content
             ref={c => this._content = c}
