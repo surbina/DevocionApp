@@ -6,12 +6,8 @@ import {
 } from 'react-native';
 import {
   Container,
-  Header,
-  Title,
   Content,
-  Spinner,
-  Button,
-  Icon
+  Spinner
 } from 'native-base';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import shallowCompare from 'react-addons-shallow-compare';

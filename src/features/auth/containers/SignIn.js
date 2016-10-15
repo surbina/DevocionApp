@@ -2,16 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   Container,
-  Header,
-  Title,
-  Content,
-  Button,
-  Icon
+  Content
 } from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
 import dismissKeyboard from 'dismissKeyboard';
 
-import { DrawerContainer } from '../../../components/drawer/Drawer.js';
+import AppContainer from '../../../components/AppContainer.js';
 import SignInForm from '../components/SignInForm.js';
 import { signInAction } from '../../../reducers/user/actions.js';
 import { DEVOTIONAL_VIEW_ROUTE_INDEX } from '../../../Navigation.js';
@@ -28,7 +24,6 @@ class SignIn extends Component {
 
     this.handleSubmitSignIn = this._handleSubmitSignIn.bind(this);
     this.redirectOnSuccessSignIn = this._redirectOnSuccessSignIn.bind(this);
-    this.handleOpenDrawer = this._handleOpenDrawer.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -37,11 +32,6 @@ class SignIn extends Component {
 
   _handleSubmitSignIn(user) {
     this.props.dispatch(signInAction(user, this.redirectOnSuccessSignIn));
-  }
-
-  _handleOpenDrawer() {
-    dismissKeyboard();
-    this.drawer.getWrappedInstance().openDrawer();
   }
 
   _redirectOnSuccessSignIn() {
@@ -60,18 +50,10 @@ class SignIn extends Component {
     };
 
     return (
-      <DrawerContainer
-        navigator={this.props.navigator}
-        ref={d => this.drawer = d}>
+      <AppContainer
+        title='Ingresa a la aplicación'
+        navigator={this.props.navigator}>
         <Container> 
-          <Header>
-            <Button
-              transparent
-              onPress={this.handleOpenDrawer}>
-              <Icon name='ios-menu' />
-            </Button>
-            <Title>Ingresa a la aplicación</Title>
-          </Header>
           <Content
             style={contentStyle}
             contentContainerStyle={contentContainerStyle}
@@ -81,7 +63,7 @@ class SignIn extends Component {
               isSigningIn={this.props.isSigningIn} />
           </Content>
         </Container>
-      </DrawerContainer>
+      </AppContainer>
     );
   }
 }

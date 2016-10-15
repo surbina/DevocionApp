@@ -18,7 +18,8 @@ import {
 import {
   SIGN_IN_ROUTE_INDEX,
   SIGN_UP_ROUTE_INDEX,
-  RESET_PASSWORD_ROUTE_INDEX
+  RESET_PASSWORD_ROUTE_INDEX,
+  DEVOTIONAL_VIEW_ROUTE_INDEX
 } from '../Navigation.js';
 
 class AppContainer extends Component {
@@ -26,6 +27,9 @@ class AppContainer extends Component {
     super(props);
 
     this.anonymousUserActions = [{
+      title: 'Devocionales',
+      action: this._handleNavigateToRoute.bind(this, DEVOTIONAL_VIEW_ROUTE_INDEX)
+    }, {
       title: 'Ingresar',
       action: this._handleNavigateToRoute.bind(this, SIGN_IN_ROUTE_INDEX)
     }, {

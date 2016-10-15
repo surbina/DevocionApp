@@ -2,16 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   Container,
-  Header,
-  Title,
-  Content,
-  Button,
-  Icon
+  Content
 } from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
 import dismissKeyboard from 'dismissKeyboard';
 
-import { DrawerContainer } from '../../../components/drawer/Drawer.js';
+import AppContainer from '../../../components/AppContainer.js';
 import ResetPasswordForm from '../components/ResetPasswordForm.js';
 import { SENDING_RESET_PASSWORD_MAIL_STATUS } from '../../../reducers/user/reducer.js';
 import { sendResetPasswordMailAction } from '../../../reducers/user/actions.js';
@@ -21,7 +17,6 @@ class ResetPassword extends Component {
   constructor(props) {
     super(props);
     this.handleResetPasswordSubmit = this._handleResetPasswordSubmit.bind(this);
-    this.handleOpenDrawer = this._handleOpenDrawer.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -30,11 +25,6 @@ class ResetPassword extends Component {
 
   _handleResetPasswordSubmit(email) {
     this.props.dispatch(sendResetPasswordMailAction(email));
-  }
-
-  _handleOpenDrawer() {
-    dismissKeyboard();
-    this.drawer.getWrappedInstance().openDrawer();
   }
 
   render() {
@@ -46,18 +36,10 @@ class ResetPassword extends Component {
     };
     
     return (
-      <DrawerContainer
-        navigator={this.props.navigator}
-        ref={d => this.drawer = d}>
+      <AppContainer
+        title='Reiniciar contraseña'
+        navigator={this.props.navigator}>
         <Container> 
-          <Header>
-            <Button
-              transparent
-              onPress={this.handleOpenDrawer}>
-              <Icon name='ios-menu' />
-            </Button>
-            <Title>Reiniciar contraseña</Title>
-          </Header>
           <Content
             style={contentStyle}
             contentContainerStyle={contentContainerStyle}
@@ -67,7 +49,7 @@ class ResetPassword extends Component {
               isSendingResetPasswordMail={this.props.isSendingResetPasswordMail} />
           </Content>
         </Container>
-      </DrawerContainer>
+      </AppContainer>
     );
   }
 }

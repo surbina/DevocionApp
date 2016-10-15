@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   Container,
-  Header,
-  Title,
-  Content,
-  Button,
-  Icon
+  Content
 } from 'native-base';
 import shallowCompare from 'react-addons-shallow-compare';
 import dismissKeyboard from 'dismissKeyboard';
@@ -17,7 +13,7 @@ import {
   UPDATING_USER_DATA_STATUS
 } from '../../../reducers/user/reducer.js'
 
-import { DrawerContainer } from '../../../components/drawer/Drawer.js';
+import AppContainer from '../../../components/AppContainer.js';
 import SignUpForm from '../components/SignUpForm.js';
 import { createNewUserAction } from '../../../reducers/user/actions.js';
 import contentStyle from '../../../styles/content.js';
@@ -28,7 +24,6 @@ class SignUp extends Component {
 
     this.handleSubmitSignUp = this._handleSubmitSignUp.bind(this);
     this.redirectOnSuccessSignUp = this._redirectOnSuccessSignUp.bind(this);
-    this.handleOpenDrawer = this._handleOpenDrawer.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -37,11 +32,6 @@ class SignUp extends Component {
 
   _handleSubmitSignUp(user) {
     this.props.dispatch(createNewUserAction(user, this.redirectOnSuccessSignUp));
-  }
-
-  _handleOpenDrawer() {
-    dismissKeyboard();
-    this.drawer.getWrappedInstance().openDrawer();
   }
 
   _redirectOnSuccessSignUp() {
@@ -60,18 +50,10 @@ class SignUp extends Component {
     };
     
     return (
-      <DrawerContainer
-        navigator={this.props.navigator}
-        ref={d => this.drawer = d}>
+      <AppContainer
+        title='Registrate'
+        navigator={this.props.navigator}>
         <Container> 
-          <Header>
-            <Button
-              transparent
-              onPress={this.handleOpenDrawer}>
-              <Icon name='ios-menu' />
-            </Button>
-            <Title>Registrate</Title>
-          </Header>
           <Content
             style={contentStyle}
             contentContainerStyle={contentContainerStyle}
@@ -81,7 +63,7 @@ class SignUp extends Component {
               isSigningUp={this.props.isSigningUp} />
           </Content>
         </Container>
-      </DrawerContainer>
+      </AppContainer>
     );
   }
 }
