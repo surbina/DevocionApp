@@ -22,7 +22,9 @@ class Toolbar extends ToolbarAndroid {
         actions={this.props.actions}
         style={styles.toolbar}
         subtitle={this.props.subtitle}
+        subtitleColor='#CCC'
         title={this.props.title}
+        titleColor='#FFF'
         onActionSelected={this.handleActionSelected} />
     );
   }
@@ -30,7 +32,7 @@ class Toolbar extends ToolbarAndroid {
 
 const styles = StyleSheet.create({
   toolbar: {
-    backgroundColor: '#e9eaed',
+    backgroundColor: '#4179F7',
     height: 56,
   },
 });
