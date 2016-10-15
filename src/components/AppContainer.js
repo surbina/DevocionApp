@@ -4,6 +4,7 @@ import {
   View,
   StyleSheet
 } from 'react-native';
+import _ from 'lodash';
 
 import Toolbar from '../components/Toolbar.js';
 
@@ -26,10 +27,12 @@ class AppContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.anonymousUserActions = [{
+    this.devotionalViewAction = [{
       title: 'Devocionales',
       action: this._handleNavigateToRoute.bind(this, DEVOTIONAL_VIEW_ROUTE_INDEX)
-    }, {
+    }];
+
+    this.anonymousUserDefaultActions = [{
       title: 'Ingresar',
       action: this._handleNavigateToRoute.bind(this, SIGN_IN_ROUTE_INDEX)
     }, {
@@ -55,15 +58,20 @@ class AppContainer extends Component {
   }
 
   render() {
-    let userName = '',
-      actions = this.anonymousUserActions;
+    let userName, actions;
 
     if(this.props.user.get('status') === SIGNED_USER_STATUS) {
       userName = this.props.user.get('user_first_name');
       actions = this.signedInUserActions;
     }
+    else {
+      const currentRoute = this.props.navigator.getCurrentRoutes().pop();
 
-    console.log('Toolbar: ', Toolbar);
+      userName = '';
+      actions = currentRoute.index === DEVOTIONAL_VIEW_ROUTE_INDEX ?
+        this.anonymousUserDefaultActions :
+        _.concat(this.devotionalViewAction, this.anonymousUserDefaultActions);
+    }
 
     return(
       <View style={styles.container}>
