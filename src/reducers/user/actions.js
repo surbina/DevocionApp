@@ -104,6 +104,7 @@ export function updateAdditionalUserDataAction(user) {
     dispatch(submitAdditionalUserDataAction());
 
     const userData = {
+      id: user.id,
       first_name: user.firstName,
       last_name: user.lastName
     };
