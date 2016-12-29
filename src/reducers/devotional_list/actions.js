@@ -17,7 +17,7 @@ export function fetchPrevDevotionalAction(publish_date, successCallbackAction, e
       dispatch(requestPrevDevotionalAction(publish_date));
 
       firebase.database()
-        .ref('devotional_list/')
+        .ref('published_devotional_list/')
         .orderByChild('publish_date')
         .endAt(publish_date)
         .limitToLast(1)
@@ -70,7 +70,7 @@ export function fetchNextDevotionalAction(publish_date, successCallbackAction, e
       dispatch(requestPrevDevotionalAction(publish_date));
 
       firebase.database()
-        .ref('devotional_list/')
+        .ref('published_devotional_list/')
         .orderByChild('publish_date')
         .startAt(publish_date)
         .limitToFirst(1)
